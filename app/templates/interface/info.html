@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}接口详情{% endblock %}
+{% block head %}
+    {#    <link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">#}
+{% endblock %}
+{% block main %}
+    <div class="content-box-40">
+        <h3 class="page-title">接口详情</h3>
+        <form action="{{ url_for('interface.interface_info',id=id) }}" method="post">
+            <div class="form-container">
+                {{ wtf.quick_form(form) }}
+            </div>
+        </form>
+    </div>
+{% endblock %}
