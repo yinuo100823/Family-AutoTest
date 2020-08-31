@@ -12,6 +12,8 @@ from app.models import User, Interface
 from sqlalchemy import and_
 from exts import db
 
+select = "接口管理"
+
 
 @interface.route("/interface/list", methods=["GET", "POST"])
 def interface_list():
@@ -32,7 +34,7 @@ def interface_list():
         if service:
             interfaces = [interface for interface in interfaces if interface.service_id == service]
             form.service.data = form.service.data
-    return render_template("interface/list.html", interfaces=interfaces, form=form, select="测试接口管理")
+    return render_template("interface/list.html", interfaces=interfaces, form=form, select=select)
 
 
 @interface.route("/interface/<id>/info", methods=["GET", "POST"])
@@ -59,7 +61,7 @@ def interface_info(id):
             form.body.data = interface.body
             form.service.data = interface.service_id
             form.desc.data = interface.desc
-        return render_template("interface/info.html", form=form, id=id, select="测试接口管理")
+        return render_template("interface/info.html", form=form, id=id, select=select)
     else:
         return
 
@@ -84,7 +86,7 @@ def interface_create():
         db.session.commit()
         return redirect(url_for(".interface_list"))
     else:
-        return render_template("interface/add.html", form=form, select="测试接口管理")
+        return render_template("interface/add.html", form=form, select=select)
 
 
 @interface.before_request

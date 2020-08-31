@@ -10,7 +10,7 @@ from . import case
 from app.models import User, Case, Interface
 from app.forms import CaseForm, LoginForm, CaseSearchForm, CaseAddForm
 
-select = "测试用例管理"
+select = "用例管理"
 
 
 @case.route("/case/list", methods=["GET", "POST"])

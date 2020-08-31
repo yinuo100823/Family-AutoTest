@@ -95,7 +95,7 @@ td.padding-0px {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
-
+/*详情页and创建页面返回按钮去掉padding*/
 form.navbar-form.navbar-left{
     padding: 0;
 }
