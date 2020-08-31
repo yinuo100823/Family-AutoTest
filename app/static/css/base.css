@@ -2,20 +2,18 @@
     margin: 0;
 }
 
-#body {
+#content-body {
     background-color: #dadada;
     padding: 100px;
 }
 
 /*主展示区域样式设置*/
 .main {
-
     background: #fff;
     width: 80%;
     margin: 0 auto;
     overflow: hidden;
     padding: 30px;
-    /*height: 800px;*/
 }
 
 
@@ -60,7 +58,7 @@ div.search {
     width: 100%;
     overflow: hidden;
     padding: 0 50px 20px 0;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
     border-bottom: 2px solid #f3f3f3;
 }
 

@@ -4,7 +4,6 @@
 # @Author : Gery.li
 # @File : views.py
 from datetime import datetime
-from copy import deepcopy
 from flask import render_template, session, request, url_for, g, redirect, flash
 from exts import db
 from . import case
@@ -29,7 +28,7 @@ def case_list():
         form.service.data = form.service.data
         form.interface.data = form.interface.data
         form.name.data = form.name.data
-    return render_template("case/list.html", cases=cases, form=form)
+    return render_template("case/list.html", cases=cases, form=form, select="测试用例管理")
 
 
 @case.route("/case/<id>/info", methods=["GET", "POST"])
@@ -68,7 +67,7 @@ def case_info(id):
             form.is_pass.data = case.is_pass
             form.msg.data = case.msg
             form.resp.data = case.resp
-        return render_template("case/info.html", form=form, id=id)
+        return render_template("case/info.html", form=form, id=id, select="测试用例管理")
     else:
         return
 
@@ -98,7 +97,7 @@ def case_create():
         db.session.commit()
         return redirect(url_for(".case_list"))
     else:
-        return render_template("case/add.html", form=form)
+        return render_template("case/add.html", form=form, select="测试用例管理")
 
 
 @case.route("/case/copy/", methods=["POST"])

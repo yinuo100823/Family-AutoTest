@@ -31,7 +31,7 @@ def service_list():
     else:
         search = and_(Service.creater_id == user_id)
     services = Service.query.filter(search).order_by(Service.update_time.desc())
-    return render_template("services/list.html", services=services)
+    return render_template("services/list.html", services=services, select="测试服务管理")
 
 
 @services.route("/services/<id>/info", methods=["GET", "POST"])
@@ -52,9 +52,8 @@ def service_info(id):
             form.host.data = service.host
             form.port.data = service.port
             form.desc.data = service.desc
-        return render_template("services/info.html", form=form, id=id)
+        return render_template("services/info.html", form=form, id=id, select="测试服务管理")
     else:
-        logging.error("编辑的服务信息不存在")
         return
 
 
@@ -74,7 +73,7 @@ def service_create():
         db.session.commit()
         return redirect(url_for(".service_list"))
     else:
-        return render_template("services/add.html", form=form)
+        return render_template("services/add.html", form=form, select="测试服务管理")
 
 
 @services.before_request
