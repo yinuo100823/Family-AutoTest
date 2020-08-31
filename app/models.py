@@ -44,6 +44,12 @@ class Service(db.Model):
     create_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
     update_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
 
+    def __init__(self):
+        self.services = list()
+        self.services.append((0, "请选择"))
+        [self.services.append((service.id, service.name + "（" + service.host + "）")) for service in
+         Service.query.order_by(Service.id).all()]
+
 
 class Interface(db.Model):
     __tablename__ = 'bt_interface'
@@ -52,7 +58,7 @@ class Interface(db.Model):
     name = db.Column(db.String(50), nullable=False, comment="接口名称", index=True)
     method = db.Column(db.String(10), nullable=False, comment="请求方式")
     headers = db.Column(db.String(200), nullable=False, comment="调用此接口时所需的headers信息")
-    body = db.Column(db.Text,nullable=False,default="{}",comment="请求体")
+    body = db.Column(db.Text, nullable=False, default="{}", comment="请求体")
     desc = db.Column(db.Text, comment="接口描述")
     env_type = db.Column(db.String(50), comment="环境类型：测试环境、开发环境、生产环境")
     creater_id = db.Column(db.Integer, db.ForeignKey("bt_user.id"), nullable=False)
@@ -61,6 +67,12 @@ class Interface(db.Model):
     service = db.relationship("Service", backref=db.backref("interfaces"))  # 接口所属服务
     create_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
     update_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
+
+    def __init__(self):
+        self.interfaces = list()
+        self.interfaces.append((0, "请选择"))
+        [self.interfaces.append((interface.id, interface.name + "（" + interface.uri + "）")) for interface in
+         Interface.query.order_by(Interface.id).all()]
 
 
 class Case(db.Model):
@@ -85,6 +97,12 @@ class Case(db.Model):
     creater = db.relationship("User", backref=db.backref("cases"))
     create_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
     update_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
+
+    def __init__(self):
+        self.cases = list()
+        self.cases.append((0, "请选择"))
+        [self.cases.append((case.id, case.name)) for case in
+         Case.query.order_by(Case.id).all()]
 
 # ---------------------------------多对多关系-----------------------------------------
 # product_tag = db.Table(

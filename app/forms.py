@@ -68,20 +68,19 @@ class ServiceForm(RenderForm):
 
 
 class InterfaceForm(RenderForm):
+    service = SelectField("所属服务", coerce=int)
     name = StringField("接口名称", validators=[DataRequired(), Length(max=50)])
     uri = StringField("接口路径", validators=[DataRequired(), Length(max=50)])
     method = SelectField('*请求方式', choices=[('GET', 'GET'), ('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE')])
     headers = TextAreaField("请求头", validators=[DataRequired(), Length(max=500)])
     body = TextAreaField("*请求体(body)", validators=[DataRequired()], render_kw={"rows": 15})
-    service = SelectField("所属服务", coerce=int)
     desc = TextAreaField("接口描述")
 
     submit = SubmitField("保存", render_kw={"class": "btn-primary btn-block"})
 
     def __init__(self, *args, **kwargs):
         super(InterfaceForm, self).__init__(*args, **kwargs)
-        self.service.choices = [(service.id, service.name + "（" + service.host + "）") for service in
-                                Service.query.order_by(Service.id).all()]
+        self.service.choices = Service().services
 
 
 class CaseForm(RenderForm):
@@ -101,32 +100,26 @@ class CaseForm(RenderForm):
 
     def __init__(self, *args, **kwargs):
         super(CaseForm, self).__init__(*args, **kwargs)
-        self.pre_case_id.choices.append((0, "请选择"))
-        self.interface.choices = [(interface.id, interface.name + "（" + interface.uri + "）") for interface in
-                                  Interface.query.order_by(Interface.id).all()]
-        [self.pre_case_id.choices.append((case.id, case.name)) for case in
-         Case.query.order_by(Case.id).all()]
+        self.interface.choices = Interface().interfaces
+        self.pre_case_id.choices = Case().cases
 
 
 class CaseAddForm(RenderForm):
-    interface = SelectField("所测接口", coerce=int)
-    name = StringField("测试用例名称", validators=[DataRequired(), Length(max=100)])
-    is_run = SelectField('是否执行', choices=[('Yes', 'Yes'), ('No', 'No')])
-    headers = TextAreaField("请求头(headers)", validators=[DataRequired()], render_kw={"rows": 5})
-    body = TextAreaField("请求体(body)", validators=[DataRequired()], render_kw={"rows": 15})
+    interface = SelectField("* 所测接口", coerce=int)
+    name = StringField("* 测试用例名称", validators=[DataRequired(), Length(max=100)])
+    is_run = SelectField('* 是否执行', choices=[('Yes', 'Yes'), ('No', 'No')])
+    headers = TextAreaField("* 请求头(headers)", validators=[DataRequired()], render_kw={"rows": 5})
+    body = TextAreaField("* 请求体(body)", validators=[DataRequired()], render_kw={"rows": 15})
     pre_case_id = SelectField("依赖的测试用例", coerce=int, choices=[])
     pre_fields = TextAreaField("前置数据设置", render_kw={"rows": 5})
-    except_result = TextAreaField("预期结果", validators=[DataRequired()])
-    assert_type = TextAreaField("断言类型(判断状态码、data内容或数组长度等)", validators=[DataRequired()])
+    except_result = TextAreaField("* 预期结果", validators=[DataRequired()])
+    assert_type = TextAreaField("* 断言类型(判断状态码、data内容或数组长度等)", validators=[DataRequired()])
     submit = SubmitField("保存", render_kw={"class": "btn-primary btn-block"})
 
     def __init__(self, *args, **kwargs):
         super(CaseAddForm, self).__init__(*args, **kwargs)
-        self.interface.choices = [(interface.id, interface.name + "（" + interface.uri + "）") for interface in
-                                  Interface.query.order_by(Interface.id).all()]
-        self.pre_case_id.choices.append((0, "请选择"))
-        [self.pre_case_id.choices.append((case.id, case.name)) for case in
-         Case.query.order_by(Case.id).all()]
+        self.interface.choices = Interface().interfaces
+        self.pre_case_id.choices = Case().cases
 
 
 class CaseSearchForm(RenderForm):
@@ -137,12 +130,8 @@ class CaseSearchForm(RenderForm):
 
     def __init__(self, *args, **kwargs):
         super(CaseSearchForm, self).__init__(*args, **kwargs)
-        self.interface.choices.append((0, "请选择接口"))
-        self.service.choices.append((0, "请选择服务"))
-        [self.interface.choices.append((interface.id, interface.name + "（" + interface.uri + "）")) for interface in
-         Interface.query.order_by(Interface.id).all()]
-        [self.service.choices.append((service.id, service.name + "（" + service.host + "）")) for service in
-         Service.query.order_by(Service.id).all()]
+        self.interface.choices = Interface().interfaces
+        self.service.choices = Service().services
 
 
 class InterfaceSearchForm(RenderForm):
@@ -153,6 +142,4 @@ class InterfaceSearchForm(RenderForm):
 
     def __init__(self, *args, **kwargs):
         super(InterfaceSearchForm, self).__init__(*args, **kwargs)
-        self.service.choices.append((0, "请选择服务"))
-        [self.service.choices.append((service.id, service.name + "（" + service.host + "）")) for service in
-         Service.query.order_by(Service.id).all()]
+        self.service.choices = Service().services
