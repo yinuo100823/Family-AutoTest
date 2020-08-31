@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 # @Time : 2020/6/2 10:02
 # @Author : Gery.li
-# @File : Mysqlutil.py
+# @File : MysqlUtil.py
 import pymysql
 import config
 

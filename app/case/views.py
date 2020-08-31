@@ -9,8 +9,10 @@ from exts import db
 from . import case
 from app.models import User, Case, Interface
 from app.forms import CaseForm, LoginForm, CaseSearchForm, CaseAddForm
+from common.CaseRun import CaseRun
 
 select = "用例管理"
+case_run = CaseRun()
 
 
 @case.route("/case/list", methods=["GET", "POST"])
@@ -102,9 +104,9 @@ def case_create():
         return render_template("case/add.html", form=form, select=select)
 
 
-@case.route("/case/copy/", methods=["POST"])
-def case_copy():
-    case = Case.query.get(request.form.get("id"))
+@case.route("/case/<id>/copy/", methods=["POST"])
+def case_copy(id):
+    case = Case.query.get(id)
     new_case = Case()
     new_case.service_id = case.service_id
     new_case.interface_id = case.interface_id
@@ -131,6 +133,12 @@ def case_delete():
     if case:
         db.session.delete(case)
         db.session.commit()
+    return redirect(url_for(".case_list"))
+
+
+@case.route("/case/<id>/run/", methods=["POST"])
+def case_run_by_id(id):
+    case_run.run_case(id)
     return redirect(url_for(".case_list"))
 
 

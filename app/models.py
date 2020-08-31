@@ -3,10 +3,12 @@
 # @Time : 2020/8/25 9:29
 # @Author : Gery.li
 # @File : models.py
+import json
 
 from exts import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from common.RequestUtil import RequestUtil
 
 
 class User(db.Model):
@@ -45,10 +47,14 @@ class Service(db.Model):
     update_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
 
     def __init__(self):
-        self.services = list()
-        self.services.append((0, "请选择"))
-        [self.services.append((service.id, service.name + "（" + service.host + "）")) for service in
+        self.__services = list()
+
+    @property
+    def services(self):
+        self.__services.append((0, "请选择"))
+        [self.__services.append((service.id, service.name + "（" + service.host + "）")) for service in
          Service.query.order_by(Service.id).all()]
+        return self.__services
 
 
 class Interface(db.Model):
@@ -69,10 +75,14 @@ class Interface(db.Model):
     update_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
 
     def __init__(self):
-        self.interfaces = list()
-        self.interfaces.append((0, "请选择"))
-        [self.interfaces.append((interface.id, interface.name + "（" + interface.uri + "）")) for interface in
+        self.__interfaces = list()
+
+    @property
+    def interfaces(self):
+        self.__interfaces.append((0, "请选择"))
+        [self.__interfaces.append((interface.id, interface.name + "（" + interface.uri + "）")) for interface in
          Interface.query.order_by(Interface.id).all()]
+        return self.__interfaces
 
 
 class Case(db.Model):
@@ -99,10 +109,75 @@ class Case(db.Model):
     update_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
 
     def __init__(self):
-        self.cases = list()
-        self.cases.append((0, "请选择"))
-        [self.cases.append((case.id, case.name)) for case in
+        self.__cases = list()
+
+    @property
+    def cases(self):
+        self.__cases.append((0, "请选择"))
+        [self.__cases.append((case.id, case.name)) for case in
          Case.query.order_by(Case.id).all()]
+        return self.__cases
+
+    @classmethod
+    def load_cases_by_app(cls, service_id):
+        return Case.query.filter(Case.service_id == service_id).all()
+
+    @classmethod
+    def load_case_by_id(cls, case_id):
+        return Case.query.filter(Case.id == case_id).first()
+
+    @classmethod
+    def load_cases_by_user(cls, user_id):
+        return Case.query.filter(Case.creater_id == user_id).all()
+
+    @classmethod
+    def update_result_by_id(cls, case_id, is_pass, msg, resp):
+        case = cls.load_case_by_id(case_id)
+        case.update_time = datetime.now()
+        case.is_pass = is_pass
+        case.msg = msg
+        case.resp = resp
+        db.session.commit()
+
+    # @classmethod
+    # def assert_response(cls, case, response):
+    #     return {"is_pass": "success", "msg": None}
+    #
+    # @classmethod
+    # def run_case(cls, id):
+    #     req = RequestUtil()
+    #     case = Case.load_case_by_id(id)
+    #     host = case.service.host
+    #     port = case.service.port
+    #     if port:
+    #         url = host + ":" + port + case.interface.uri
+    #     else:
+    #         url = host + case.interface.uri
+    #     method = case.interface.method
+    #     headers = json.loads(case.headers)
+    #     body = json.loads(case.body)
+    #     pre_case_id = case.pre_case_id
+    #     pre_fields = json.loads(case.pre_fields)
+    #     # 先判断是否存在前置case
+    #     if pre_case_id:
+    #         pre_case = cls.load_case_by_id(pre_case_id)
+    #         pre_resp = cls.run_case(pre_case_id)
+    #         if cls.assert_response(pre_case, pre_resp) == "fail":
+    #             pre_resp["msg"] = ".".join(["前置case：", pre_case.id, "-->", pre_case.name, "执行不通过"])
+    #             return pre_resp
+    #         # 提取case依赖的参数，pre_fields默认为[]
+    #         for pre_param in pre_fields:
+    #             pre_param_type = pre_param.get("scope")
+    #             pre_param_name = pre_param.get("field")
+    #             pre_param_value = pre_resp.get("data").get("pre_param_name")
+    #             if pre_param_type == "header":
+    #                 headers[pre_param_name] = pre_param_value
+    #             elif pre_param_type == "body":
+    #                 body[pre_param_name] = pre_param_value
+    #             else:
+    #                 pass
+    #     response = req.request(url=url, method=method, headers=headers, params=body)
+    #     return response
 
 # ---------------------------------多对多关系-----------------------------------------
 # product_tag = db.Table(
