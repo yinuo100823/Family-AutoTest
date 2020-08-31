@@ -4,7 +4,15 @@
     {#    <link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">#}
 {% endblock %}
 {% block main %}
-    <div class="content-box-40">
+    <div class="content-box-60">
+        <form class="navbar-form navbar-left" role="search" action="{{ url_for('case.case_list') }}">
+            <div class="form-group btn-right">
+                <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                </button>
+            </div>
+        </form>
+        <br>
         <h3 class="page-title">新建测试用例</h3>
         <form action="{{ url_for('case.case_create') }}" method="post">
             <div class="form-container">

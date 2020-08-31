@@ -9,6 +9,10 @@
     color: #f34535 !important;
 }
 
+.navbar.navbar-inverse.navbar-fixed-top .dropdown-menu a{
+    color: #080202 !important;
+}
+
 #content-body {
     background-color: #dadada;
     padding: 100px;
@@ -90,4 +94,8 @@ div.search div.create {
 td.padding-0px {
     padding-left: 0 !important;
     padding-right: 0 !important;
+}
+
+form.navbar-form.navbar-left{
+    padding: 0;
 }

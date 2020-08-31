@@ -15,7 +15,7 @@
     {% block head %}{% endblock %}
 </head>
 <body id="content-body">
-<nav class="side-navbar" id="navbar"></nav>
+{#<nav class="side-navbar" id="navbar"></nav>#}
 {#顶部导航   navbar-fixed-top#}
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <a class="navbar-brand" href="#">
@@ -38,29 +38,29 @@
                     <a href="">首页</a>
                 </li>
                 <li>
-                    <a href="{{ url_for("case.case_create") }}">创建测试用例</a>
+                    <a href="{{ url_for("case.case_create") }}">新建测试用例</a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {% if select%}
                             {{ select }}
                         {% else %}
-                            请选择你要操作的列表
+                            选择菜单
                         {% endif %}
                         <strong class="caret"></strong>
                     </a>
                 <ul class="dropdown-menu">
                     <li>
-                         <a href="{{ url_for('home.index') }}">测试平台首页</a>
+                         <a href="{{ url_for('home.index') }}">平台首页</a>
                     </li>
                     <li>
-                         <a href="{{ url_for('case.case_list') }}">测试用例管理</a>
+                         <a href="{{ url_for('case.case_list') }}">用例管理</a>
                     </li>
                     <li>
-                         <a href="{{ url_for('interface.interface_list') }}">测试接口管理</a>
+                         <a href="{{ url_for('interface.interface_list') }}">接口管理</a>
                     </li>
                     <li>
-                         <a href="{{ url_for('services.service_list') }}">测试服务管理</a>
+                         <a href="{{ url_for('services.service_list') }}">服务管理</a>
                     </li>
 
                 </ul>
@@ -70,7 +70,9 @@
                 <div class="form-group">
                     <input type="text" class="form-control" name="name" placeholder="请输入测试用例名称"/>
                 </div>
-                <button type="submit" class="btn btn-default btn-primary">搜索</button>
+                <button type="submit" class="btn btn-default btn-primary">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
             </form>
 
             <ul class="nav navbar-nav navbar-right">
