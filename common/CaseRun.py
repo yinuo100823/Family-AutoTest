@@ -26,6 +26,7 @@ class CaseRun(RequestUtil):
         else:
             url = host + case.interface.uri
         method = case.interface.method
+        print(case.headers)
         headers = json.loads(case.headers)
         body = json.loads(case.body)
         pre_case_id = case.pre_case_id

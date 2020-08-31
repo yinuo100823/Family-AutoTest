@@ -62,7 +62,7 @@ class LoginForm(RenderForm):
 class ServiceForm(RenderForm):
     name = StringField("服务名称", validators=[DataRequired(), Length(max=50)])
     host = StringField("服务地址", validators=[DataRequired(), Length(max=50)])
-    port = IntegerField("服务端口")
+    port = IntegerField("服务端口",validators=[Optional()])
     desc = TextAreaField("服务描述")
     submit = SubmitField("保存", render_kw={"class": "btn-primary btn-block"})
 
