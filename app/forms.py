@@ -4,8 +4,7 @@
 # @Author : Gery.li
 # @File : forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, IntegerField, TextAreaField, SelectField, \
-    RadioField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, IntegerField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, EqualTo, Email, Length, Optional
 from app.models import Service, User, Interface, Case
 from wtforms import ValidationError
@@ -71,7 +70,9 @@ class ServiceForm(RenderForm):
 class InterfaceForm(RenderForm):
     name = StringField("接口名称", validators=[DataRequired(), Length(max=50)])
     uri = StringField("接口路径", validators=[DataRequired(), Length(max=50)])
+    method = SelectField('*请求方式', choices=[('GET', 'GET'), ('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE')])
     headers = TextAreaField("请求头", validators=[DataRequired(), Length(max=500)])
+    body = TextAreaField("*请求体(body)", validators=[DataRequired()], render_kw={"rows": 15})
     service = SelectField("所属服务", coerce=int)
     desc = TextAreaField("接口描述")
 
@@ -86,7 +87,6 @@ class InterfaceForm(RenderForm):
 class CaseForm(RenderForm):
     interface = SelectField("*所测接口", coerce=int)
     name = StringField("*测试用例名称", validators=[DataRequired(), Length(max=100)])
-    method = SelectField('*请求方式', choices=[('GET', 'GET'), ('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE')])
     is_run = SelectField('*是否执行', choices=[('Yes', 'Yes'), ('No', 'No')])
     headers = TextAreaField("*请求头(headers)", validators=[DataRequired()], render_kw={"rows": 5})
     body = TextAreaField("*请求体(body)", validators=[DataRequired()], render_kw={"rows": 15})
@@ -111,7 +111,6 @@ class CaseForm(RenderForm):
 class CaseAddForm(RenderForm):
     interface = SelectField("所测接口", coerce=int)
     name = StringField("测试用例名称", validators=[DataRequired(), Length(max=100)])
-    method = SelectField('请求方式', choices=[('GET', 'GET'), ('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE')])
     is_run = SelectField('是否执行', choices=[('Yes', 'Yes'), ('No', 'No')])
     headers = TextAreaField("请求头(headers)", validators=[DataRequired()], render_kw={"rows": 5})
     body = TextAreaField("请求体(body)", validators=[DataRequired()], render_kw={"rows": 15})
@@ -123,9 +122,11 @@ class CaseAddForm(RenderForm):
 
     def __init__(self, *args, **kwargs):
         super(CaseAddForm, self).__init__(*args, **kwargs)
+        self.interface.choices = [(interface.id, interface.name + "（" + interface.uri + "）") for interface in
+                                  Interface.query.order_by(Interface.id).all()]
         self.pre_case_id.choices.append((0, "请选择"))
-        [self.pre_case_id.choices.append ( (case.id, case.name) ) for case in
-         Case.query.order_by ( Case.id ).all ()]
+        [self.pre_case_id.choices.append((case.id, case.name)) for case in
+         Case.query.order_by(Case.id).all()]
 
 
 class CaseSearchForm(RenderForm):

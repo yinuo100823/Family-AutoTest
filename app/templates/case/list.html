@@ -18,7 +18,7 @@
     <table class="table table-striped table-hover">
         <thead>
         <tr>
-            {% for th in ["编号","服务名称","所测接口","测试用例名称","请求方式","是否执行","更新时间"] %}
+            {% for th in ["编号","服务名称","所测接口","测试用例名称","是否执行","更新时间"] %}
                 <th>{{ th }}</th>
             {% endfor %}
         </tr>
@@ -30,7 +30,6 @@
                 <td class="td">{{ case.service.name }}（{{ case.service.host }}）</td>
                 <td class="td">{{ case.interface.name }}（{{ case.interface.uri }}）</td>
                 <td class="td">{{ case.name }}</td>
-                <td class="td">{{ case.method }}</td>
                 <td class="td">{{ case.is_run }}</td>
                 <td class="td">{{ case.update_time }}</td>
                 <td class="padding-0px">

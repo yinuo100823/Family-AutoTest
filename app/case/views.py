@@ -12,16 +12,16 @@ from app.models import User, Case, Interface
 from app.forms import CaseForm, LoginForm, CaseSearchForm, CaseAddForm
 
 
-@case.route ( "/case/list", methods=["GET", "POST"] )
+@case.route("/case/list", methods=["GET", "POST"])
 def case_list():
-    form = CaseSearchForm ()
-    cases = Case.query.filter ( Case.creater_id == g.user.id ).order_by ( Case.update_time.desc () )
-    if request.method == "POST" and form.validate_on_submit ():
+    form = CaseSearchForm()
+    cases = Case.query.filter(Case.creater_id == g.user.id).order_by(Case.update_time.desc())
+    if request.method == "POST" and form.validate_on_submit():
         service = form.service.data
         interface = form.interface.data
         name = form.name.data
         if name:
-            cases = [case for case in cases if case.name.find ( name ) != -1]
+            cases = [case for case in cases if case.name.find(name) != -1]
         if service:
             cases = [case for case in cases if case.service_id == service]
         if interface:
@@ -29,20 +29,19 @@ def case_list():
         form.service.data = form.service.data
         form.interface.data = form.interface.data
         form.name.data = form.name.data
-    return render_template ( "case/list.html", cases=cases, form=form )
+    return render_template("case/list.html", cases=cases, form=form)
 
 
-@case.route ( "/case/<id>/info", methods=["GET", "POST"] )
+@case.route("/case/<id>/info", methods=["GET", "POST"])
 def case_info(id):
-    form = CaseForm ()
-    case = Case.query.filter ( Case.id == id ).first ()
+    form = CaseForm()
+    case = Case.query.filter(Case.id == id).first()
     if case:
-        if request.method == "POST" and form.validate_on_submit ():
-            interface = Interface.query.filter ( Interface.id == form.interface.data ).first ()
+        if request.method == "POST" and form.validate_on_submit():
+            interface = Interface.query.filter(Interface.id == form.interface.data).first()
             case.interface = interface
             case.service = interface.service
             case.name = form.name.data
-            case.method = form.method.data
             case.is_run = form.is_run.data
             case.headers = form.headers.data
             case.body = form.body.data
@@ -50,16 +49,15 @@ def case_info(id):
             case.pre_fields = form.pre_fields.data
             case.except_result = form.except_result.data
             case.assert_type = form.assert_type.data
-            case.update_time = datetime.now ()
+            case.update_time = datetime.now()
             case.is_pass = None
             case.msg = None
             case.resp = None
-            db.session.commit ()
+            db.session.commit()
             return redirect(url_for(".case_list"))
         else:
             form.interface.data = case.interface_id
             form.name.data = case.name
-            form.method.data = case.method
             form.is_run.data = case.is_run
             form.headers.data = case.headers
             form.body.data = case.body
@@ -70,24 +68,22 @@ def case_info(id):
             form.is_pass.data = case.is_pass
             form.msg.data = case.msg
             form.resp.data = case.resp
-        return render_template ( "case/info.html", form=form, id=id )
+        return render_template("case/info.html", form=form, id=id)
     else:
-        flash ( "修改的数据不存在" )
+        flash("修改的数据不存在")
         return
 
 
-@case.route ( "/case/create/", methods=["GET", "POST"] )
+@case.route("/case/create/", methods=["GET", "POST"])
 def case_create():
-    form = CaseAddForm ()
-    if request.method == "POST" and form.validate_on_submit ():
-        case = Case ()
-        interface = Interface.query.filter ( Interface.id == form.interface.data ).first ()
+    form = CaseAddForm()
+    if request.method == "POST" and form.validate_on_submit():
+        case = Case()
+        interface = Interface.query.filter(Interface.id == form.interface.data).first()
         case.interface = interface
 
-        
         case.service_id = interface.service_id
         case.name = form.name.data
-        case.method = form.method.data
         case.is_run = form.is_run.data
         case.headers = form.headers.data
         case.body = form.body.data
@@ -96,24 +92,23 @@ def case_create():
         case.except_result = form.except_result.data
         case.creater_id = g.user.id
         case.assert_type = form.assert_type.data
-        case.create_time = datetime.now ()
-        case.update_time = datetime.now ()
+        case.create_time = datetime.now()
+        case.update_time = datetime.now()
 
-        db.session.add ( case )
-        db.session.commit ()
-        return redirect ( url_for ( ".case_list") )
+        db.session.add(case)
+        db.session.commit()
+        return redirect(url_for(".case_list"))
     else:
-        return render_template ( "case/add.html", form=form )
+        return render_template("case/add.html", form=form)
 
 
-@case.route ( "/case/copy/", methods=["POST"] )
+@case.route("/case/copy/", methods=["POST"])
 def case_copy():
-    case = Case.query.get ( request.form.get ( "id" ) )
-    new_case = Case ()
+    case = Case.query.get(request.form.get("id"))
+    new_case = Case()
     new_case.service_id = case.service_id
     new_case.interface_id = case.interface_id
     new_case.name = case.name + "--复制"
-    new_case.method = case.method
     new_case.is_run = case.is_run
     new_case.headers = case.headers
     new_case.body = case.body
@@ -122,36 +117,36 @@ def case_copy():
     new_case.except_result = case.except_result
     new_case.assert_type = case.assert_type
     new_case.creater_id = case.creater_id
-    new_case.update_time = datetime.now ()
-    new_case.create_time = datetime.now ()
-    db.session.add ( new_case )
-    db.session.commit ()
-    return redirect ( url_for ( ".case_list" ) )
+    new_case.update_time = datetime.now()
+    new_case.create_time = datetime.now()
+    db.session.add(new_case)
+    db.session.commit()
+    return redirect(url_for(".case_list"))
 
 
-@case.route ( "/case/delete/",methods=["POST"] )
+@case.route("/case/delete/", methods=["POST"])
 def case_delete():
     id = request.form.get("id")
-    case = Case.query.get ( id )
+    case = Case.query.get(id)
     if case:
         db.session.delete(case)
-        db.session.commit ()
-    return redirect ( url_for ( ".case_list" ) )
+        db.session.commit()
+    return redirect(url_for(".case_list"))
 
 
 @case.before_request
 def before_request():
-    user_id = session.get ( "user_id" )
+    user_id = session.get("user_id")
     if user_id:
-        user = User.query.filter ( User.id == user_id ).first ()
+        user = User.query.filter(User.id == user_id).first()
         if user:
             g.user = user
     else:
-        return render_template ( "user/login.html", form=LoginForm () )
+        return render_template("user/login.html", form=LoginForm())
 
 
 @case.context_processor
 def context_processor():
-    if hasattr ( g, 'user' ):
+    if hasattr(g, 'user'):
         return {"user_info": g.user}
     return {}

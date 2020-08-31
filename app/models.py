@@ -45,14 +45,14 @@ class Service(db.Model):
     update_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
 
 
-
-
 class Interface(db.Model):
     __tablename__ = 'bt_interface'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, index=True)
     uri = db.Column(db.String(50), nullable=False, comment="接口路径", index=True)
     name = db.Column(db.String(50), nullable=False, comment="接口名称", index=True)
+    method = db.Column(db.String(10), nullable=False, comment="请求方式")
     headers = db.Column(db.String(200), nullable=False, comment="调用此接口时所需的headers信息")
+    body = db.Column(db.Text,nullable=False,default="{}",comment="请求体")
     desc = db.Column(db.Text, comment="接口描述")
     env_type = db.Column(db.String(50), comment="环境类型：测试环境、开发环境、生产环境")
     creater_id = db.Column(db.Integer, db.ForeignKey("bt_user.id"), nullable=False)
@@ -71,7 +71,6 @@ class Case(db.Model):
     interface_id = db.Column(db.Integer, db.ForeignKey("bt_interface.id"), nullable=False, comment="关联的接口")
     interface = db.relationship("Interface", backref=db.backref("cases"))
     name = db.Column(db.String(50), nullable=False, comment="测试用例名称")
-    method = db.Column(db.String(10), nullable=False, comment="请求方式")
     is_run = db.Column(db.String(3), nullable=False, comment="是否运行：Yes/No", default="Yes")
     headers = db.Column(db.Text, default={}, comment="接口时所需的headers信息")
     body = db.Column(db.Text, default={}, comment="请求body")
@@ -86,7 +85,6 @@ class Case(db.Model):
     creater = db.relationship("User", backref=db.backref("cases"))
     create_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
     update_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
-
 
 # ---------------------------------多对多关系-----------------------------------------
 # product_tag = db.Table(

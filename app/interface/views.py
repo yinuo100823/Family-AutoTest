@@ -43,9 +43,10 @@ def interface_info(id):
         if request.method == "POST" and form.validate_on_submit():
             interface.name = form.name.data
             interface.uri = form.uri.data
+            interface.method = form.method.data
             interface.headers = form.headers.data
+            interface.body = form.body.data
             interface.service_id = form.service.data
-            # interface.env_type = form.env_type.data
             interface.desc = form.desc.data
             interface.update_time = datetime.now()
             db.session.commit()
@@ -53,7 +54,9 @@ def interface_info(id):
         else:
             form.name.data = interface.name
             form.uri.data = interface.uri
+            form.method.data = interface.method
             form.headers.data = interface.headers
+            form.body.data = interface.body
             form.service.data = interface.service_id
             form.desc.data = interface.desc
         return render_template("interface/info.html", form=form, id=id)
@@ -69,7 +72,9 @@ def interface_create():
         interface = Interface()
         interface.name = form.name.data
         interface.uri = form.uri.data
+        interface.method = form.method.data
         interface.headers = form.headers.data
+        interface.body = form.body.data
         interface.service_id = form.service.data
         interface.desc = form.desc.data
         interface.creater_id = g.user.id
