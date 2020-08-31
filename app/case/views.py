@@ -10,6 +10,8 @@ from . import case
 from app.models import User, Case, Interface
 from app.forms import CaseForm, LoginForm, CaseSearchForm, CaseAddForm
 
+select = "测试用例管理"
+
 
 @case.route("/case/list", methods=["GET", "POST"])
 def case_list():
@@ -28,7 +30,7 @@ def case_list():
         form.service.data = form.service.data
         form.interface.data = form.interface.data
         form.name.data = form.name.data
-    return render_template("case/list.html", cases=cases, form=form, select="测试用例管理")
+    return render_template("case/list.html", cases=cases, form=form, select=select)
 
 
 @case.route("/case/<id>/info", methods=["GET", "POST"])
@@ -67,7 +69,7 @@ def case_info(id):
             form.is_pass.data = case.is_pass
             form.msg.data = case.msg
             form.resp.data = case.resp
-        return render_template("case/info.html", form=form, id=id, select="测试用例管理")
+        return render_template("case/info.html", form=form, id=id, select=select)
     else:
         return
 
@@ -97,7 +99,7 @@ def case_create():
         db.session.commit()
         return redirect(url_for(".case_list"))
     else:
-        return render_template("case/add.html", form=form, select="测试用例管理")
+        return render_template("case/add.html", form=form, select=select)
 
 
 @case.route("/case/copy/", methods=["POST"])
@@ -140,7 +142,7 @@ def case_quick_search():
     if name:
         cases = [case for case in cases if case.name.find(name) != -1]
         case_form.name.data = name
-    return render_template("case/list.html", cases=cases, form=case_form)
+    return render_template("case/list.html", cases=cases, form=case_form, select=select)
 
 
 @case.before_request

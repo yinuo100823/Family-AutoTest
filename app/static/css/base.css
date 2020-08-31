@@ -1,6 +1,13 @@
 * {
     margin: 0;
 }
+.navbar.navbar-inverse.navbar-fixed-top a{
+    color: #fff0dc !important;
+    font-size: large;
+}
+.navbar.navbar-inverse.navbar-fixed-top .dropdown a,.dropdown-menu a{
+    color: #f34535 !important;
+}
 
 #content-body {
     background-color: #dadada;
