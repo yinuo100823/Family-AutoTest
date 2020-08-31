@@ -133,6 +133,17 @@ def case_delete():
     return redirect(url_for(".case_list"))
 
 
+@case.route("/case/quick_search/", methods=["POST"])
+def case_quick_search():
+    case_form = CaseSearchForm()
+    cases = Case.query.filter(Case.creater_id == g.user.id).order_by(Case.update_time.desc())
+    name = request.form.get("name")
+    if name:
+        cases = [case for case in cases if case.name.find(name) != -1]
+        case_form.name.data = name
+    return render_template("case/list.html", cases=cases, form=case_form)
+
+
 @case.before_request
 def before_request():
     user_id = session.get("user_id")
