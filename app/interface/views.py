@@ -61,7 +61,6 @@ def interface_info(id):
             form.desc.data = interface.desc
         return render_template("interface/info.html", form=form, id=id)
     else:
-        flash("修改的数据不存在")
         return
 
 
