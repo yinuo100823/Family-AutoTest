@@ -3,33 +3,27 @@
 }
 
 #body {
-    background-color: #f3f3f3;
+    background-color: #dadada;
+    padding: 100px;
 }
-/*左侧导航栏*/
-.left-nav{
-    float: left;
-    width: 200px;
-    background-color: #ffffff;
-    height: 1000%;
-    margin: 100px 80px 0 60px;
 
-}
 /*主展示区域样式设置*/
 .main {
 
     background: #fff;
-    width: 70%;
-    margin: 100px auto auto auto;
+    width: 80%;
+    margin: 0 auto;
     overflow: hidden;
     padding: 30px;
-    float: left;
+    /*height: 800px;*/
 }
 
 
-.navbar-brand{
+.navbar-brand {
     overflow: hidden;
     padding: 0;
 }
+
 /*logo图片大小设置*/
 .logo {
     margin: 10px 0 0 30px;
@@ -46,44 +40,49 @@
 .page-title {
     text-align: center;
 }
-.content-box-40{
+
+.content-box-40 {
     width: 40%;
     margin: 0 auto;
 }
 
-.content-box-60{
+.content-box-60 {
     width: 60%;
     margin: 0 auto;
 }
 
-.tr-td .td{
+.tr-td .td {
     padding-top: 15px !important;
 }
 
 /*列表页面的搜索区域*/
-div.search{
+div.search {
     width: 100%;
     overflow: hidden;
     padding: 0 50px 20px 0;
     margin-bottom: 50px;
     border-bottom: 2px solid #f3f3f3;
 }
+
 /*列表页面的搜索区域中的form表单*/
-div.search form.navbar-form{
+div.search form.navbar-form {
     width: 100%;
     overflow: hidden;
     padding: 0;
 }
+
 /*列表页面的搜索区域中的form表单中的元素分开距离*/
-div.search div.form-group{
+div.search div.form-group {
     margin-right: 30px;
 }
-div.search div.create{
+
+div.search div.create {
     float: left;
     margin-top: 20px;
 }
+
 /*列表中的按钮距离减少*/
-td.padding-0px{
+td.padding-0px {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
