@@ -31,7 +31,6 @@ def service_list():
     else:
         search = and_(Service.creater_id == user_id)
     services = Service.query.filter(search).order_by(Service.update_time.desc())
-    print(services)
     return render_template("services/list.html", services=services)
 
 
