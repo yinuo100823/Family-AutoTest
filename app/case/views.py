@@ -70,7 +70,6 @@ def case_info(id):
             form.resp.data = case.resp
         return render_template("case/info.html", form=form, id=id)
     else:
-        flash("修改的数据不存在")
         return
 
 
