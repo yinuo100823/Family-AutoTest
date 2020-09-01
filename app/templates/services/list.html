@@ -1,42 +1,44 @@
 {% extends 'base.html' %}
 {% block title %}服务一览{% endblock %}
 {% block head %}
-{#    <link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">#}
+    {#    <link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">#}
 {% endblock %}
 {% block main %}
-<div class="search">
-    <form class="navbar-form navbar-left" role="search" action="{{ url_for('services.service_list') }}">
-        <div class="form-group">
-            <label class="control-label" for="name">服务名称：</label>
-            <input type="text" class="form-control" name="name" placeholder="请输入"/>
+    <div class="search">
+        <form class="navbar-form navbar-left" role="search" action="{{ url_for('services.service_list') }}">
+            <div class="form-group">
+                <label class="control-label" for="name">服务名称：</label>
+                <input type="text" class="form-control" name="name" placeholder="请输入"/>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="host">服务地址：</label>
+                <input type="text" class="form-control" name="host" placeholder="请输入"/>
+            </div>
+            <div class="form-group btn-right">
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </div>
+        </form>
+        <div class="create">
+            <a href="{{ url_for('services.service_create') }}">
+                <button type="submit" class="btn btn-primary">新建服务</button>
+            </a>
         </div>
-        <div class="form-group">
-            <label class="control-label" for="host">服务地址：</label>
-            <input type="text" class="form-control" name="host" placeholder="请输入"/>
-        </div>
-        <div class="form-group btn-right">
-            <button type="submit" class="btn btn-primary">搜索</button>
-        </div>
-    </form>
-    <div class="create">
-        <a href="{{ url_for('services.service_create') }}">
-            <button type="submit" class="btn btn-primary">新建服务</button>
-        </a>
     </div>
-</div>
-<table class="table table-striped table-hover">
-    <thead>
+    <table class="table table-striped table-hover">
+        <thead>
         <tr>
-            {% for th in ["编号","服务名称","服务地址","服务端口","服务描述","更新时间"] %}
+            {% for th in ["编号","服务名称","协议","服务地址","服务端口","服务描述","更新时间"] %}
                 <th>{{ th }}</th>
             {% endfor %}
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         {% for service in services %}
             <tr class="tr-td">
                 <td class="td">{{ service.id }}</td>
                 <td class="td">{{ service.name }}</td>
+                <td class="td">{{ service.protocol }}</td>
+
                 <td class="td">{{ service.host }}</td>
                 <td class="td">{{ service.port if service.port != None else "" }}</td>
                 <td class="td">{{ service.desc }}</td>
@@ -48,6 +50,6 @@
                 </td>
             </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
 {% endblock %}
