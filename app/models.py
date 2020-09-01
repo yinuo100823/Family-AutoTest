@@ -37,6 +37,7 @@ class User(db.Model):
 class Service(db.Model):
     __tablename__ = 'bt_service'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, index=True)
+    protocol = db.Column(db.String(10), nullable=False, comment="协议：http、https")
     host = db.Column(db.String(50), nullable=False, index=True)
     port = db.Column(db.Integer)
     name = db.Column(db.String(50), nullable=False, index=True)

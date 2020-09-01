@@ -19,19 +19,25 @@ class CaseRun(RequestUtil):
 
     def run_case(self, id):
         case = Case.load_case_by_id(id)
+        protocol = case.service.protocol
         host = case.service.host
         port = case.service.port
         if port:
-            url = host + ":" + port + case.interface.uri
+            url = protocol + host + ":" + port + case.interface.uri
         else:
-            url = host + case.interface.uri
+            url = protocol + host + case.interface.uri
         method = case.interface.method
-        print(case.headers)
+
         headers = json.loads(case.headers)
+        for k, v in headers.items():
+            if isinstance(v, dict):
+                new_v = json.dumps(v)
+                headers[k] = new_v
         body = json.loads(case.body)
+
         pre_case_id = case.pre_case_id
         pre_fields = json.loads(case.pre_fields)
-        # 先判断是否存在前置case  todu
+        # 先判断是否存在前置case  todo
         # if pre_case_id:
         #     pre_case = Case.load_case_by_id(pre_case_id)
         #     pre_resp = Case.run_case(pre_case_id)
@@ -53,5 +59,5 @@ class CaseRun(RequestUtil):
         assert_result = self.__assert_response(case, response)
         case.is_pass = assert_result.get("is_pass")
         case.msg = assert_result.get("msg")
-        case.resp = json.dumps(response,ensure_ascii=False)
+        case.resp = json.dumps(response, ensure_ascii=False)
         db.session.commit()

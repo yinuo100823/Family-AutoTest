@@ -43,6 +43,7 @@ def service_info(id):
     if service:
         if request.method == "POST" and form.validate_on_submit():
             service.name = form.name.data
+            service.protocol = form.protocol.data
             service.host = form.host.data
             service.port = form.port.data
             service.desc = form.desc.data
@@ -54,6 +55,7 @@ def service_info(id):
             form.host.data = service.host
             form.port.data = service.port
             form.desc.data = service.desc
+            form.protocol.data = service.protocol
         return render_template("services/info.html", form=form, id=id, select=select)
     else:
         return
@@ -68,6 +70,7 @@ def service_create():
         service.host = form.host.data
         service.port = form.port.data
         service.desc = form.desc.data
+        service.protocol = form.protocol.data
         service.creater_id = g.user.id
         service.create_time = datetime.now()
         service.update_time = datetime.now()
