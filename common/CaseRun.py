@@ -23,9 +23,9 @@ class CaseRun(RequestUtil):
         host = case.service.host
         port = case.service.port
         if port:
-            url = protocol + host + ":" + port + case.interface.uri
+            url = protocol + "://" + host + ":" + port + case.interface.uri
         else:
-            url = protocol + host + case.interface.uri
+            url = protocol + "://" + host + case.interface.uri
         method = case.interface.method
 
         headers = json.loads(case.headers)
