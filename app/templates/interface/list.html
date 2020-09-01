@@ -26,7 +26,7 @@
         {% for interface in interfaces %}
             <tr class="tr-td">
                 <td class="td">{{ interface.id }}</td>
-                <td class="td">{{ interface.service.name }}（{{ interface.service.host }}）</td>
+                <td class="td"><a href="{{ url_for('services.service_info',id=interface.service.id) }}">{{ interface.service.name }}</a></td>
                 <td class="td">{{ interface.name }}</td>
                 <td class="td">{{ interface.uri }}</td>
                 <td class="td">{{ interface.method }}</td>

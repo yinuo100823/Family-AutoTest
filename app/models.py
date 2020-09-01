@@ -53,7 +53,7 @@ class Service(db.Model):
     @property
     def services(self):
         self.__services.append((0, "请选择"))
-        [self.__services.append((service.id, service.name + "（" + service.host + "）")) for service in
+        [self.__services.append((service.id, service.name)) for service in
          Service.query.order_by(Service.id).all()]
         return self.__services
 
@@ -81,7 +81,7 @@ class Interface(db.Model):
     @property
     def interfaces(self):
         self.__interfaces.append((0, "请选择"))
-        [self.__interfaces.append((interface.id, interface.name + "（" + interface.uri + "）")) for interface in
+        [self.__interfaces.append((interface.id, interface.name)) for interface in
          Interface.query.order_by(Interface.id).all()]
         return self.__interfaces
 

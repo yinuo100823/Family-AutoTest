@@ -24,45 +24,48 @@
         </tr>
         </thead>
         <tbody>
-        {% for case in cases  %}
+        {% for case in cases %}
             {% if case.is_pass=="success" %}
                 <tr class="tr-td success">
-            {% elif case.is_pass=="fail"%}
+                    {% elif case.is_pass=="fail" %}
                 <tr class="tr-td danger">
-            {% else %}
+                    {% else %}
                 <tr class="tr-td">
             {% endif %}
-                <td class="td">{{ case.id }}</td>
-                <td class="td">{{ case.service.name }}（{{ case.service.host }}）</td>
-                <td class="td">{{ case.interface.name }}（{{ case.interface.uri }}）</td>
-                <td class="td">{{ case.name }}</td>
-                <td class="td">{{ case.is_run }}</td>
-                <td class="td">{{ case.is_pass if case.is_pass else ""}}</td>
-                <td class="td">{{ case.update_time }}</td>
-                <td class="padding-0px">
-                    <form action="{{ url_for('case.case_info',id=case.id) }}" class="form-container">
-                        <button class="btn btn-primary">详情</button>
-                    </form>
-                </td>
-                <td class="padding-0px">
-                    <form action="{{ url_for('case.case_delete') }}" class="form-container" method="post">
-                        <input type="text" name="id" style="display: none" value="{{ case.id }}">
-                        <button class="btn btn-danger">删除</button>
-                    </form>
-                </td>
-                <td class="padding-0px">
-                    <form action="{{ url_for('case.case_copy') }}" class="form-container" method="post">
-                        <input type="text" name="id" style="display: none" value="{{ case.id }}">
-                        <button class="btn btn-success">复制</button>
-                    </form>
-                </td>
-                <td class="padding-0px">
-                    <form action="#" class="form-container">
-                        <button class="btn btn-danger">调试</button>
-                    </form>
-                </td>
+        <td class="td">{{ case.id }}</td>
+        <td class="td"><a
+                href="{{ url_for('services.service_info',id=case.service.id) }}">{{ case.service.name }}</a>
+        </td>
+        <td class="td"><a
+                href="{{ url_for('interface.interface_info',id=case.interface.id) }}">{{ case.interface.name }}</a>
+        </td>
+        <td class="td">{{ case.name }}</td>
+        <td class="td">{{ case.is_run }}</td>
+        <td class="td">{{ case.is_pass if case.is_pass else "" }}</td>
+        <td class="td">{{ case.update_time }}</td>
+        <td class="padding-0px">
+            <form action="{{ url_for('case.case_info',id=case.id) }}" class="form-container">
+                <button class="btn btn-primary">详情</button>
+            </form>
+        </td>
+        <td class="padding-0px">
+            <form action="{{ url_for('case.case_delete') }}" class="form-container" method="post">
+                <input type="text" name="id" style="display: none" value="{{ case.id }}">
+                <button class="btn btn-danger">删除</button>
+            </form>
+        </td>
+        <td class="padding-0px">
+            <form action="{{ url_for('case.case_copy',id=case.id) }}" class="form-container" method="post">
+                <button class="btn btn-success">复制</button>
+            </form>
+        </td>
+        <td class="padding-0px">
+            <form action="{{ url_for('case.case_run_by_id',id=case.id) }}" class="form-container" method="post">
+                <button class="btn btn-danger">调试</button>
+            </form>
+        </td>
 
-            </tr>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
