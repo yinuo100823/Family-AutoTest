@@ -9,22 +9,22 @@ import requests, json
 
 class RequestUtil:
     def __init__(self):
-        pass
+        self.session = requests.session()
 
     def request(self, url, method, headers=None, params=None, content_type='application/json'):
         result = None
         try:
             if method == 'GET':
-                result = requests.get(url=url, params=params, headers=headers).json()
+                result = self.session.get(url=url, params=params, headers=headers).json()
             elif method == 'POST':
                 if content_type == 'application/json':
-                    result = requests.post(url=url, json=params, headers=headers).json()
+                    result = self.session.post(url=url, json=params, headers=headers).json()
                 else:
-                    result = requests.post(url=url, data=params, headers=headers).json()
+                    result = self.session.post(url=url, data=params, headers=headers).json()
             elif method == "DELETE":
-                result = requests.delete(url=url, params=params, headers=headers).json()
+                result = self.session.delete(url=url, params=params, headers=headers).json()
             elif method == "PUT":
-                result = requests.put(url=url, params=params, headers=headers).json()
+                result = self.session.put(url=url, params=params, headers=headers).json()
             else:
                 print("http method not allowed")
             return result

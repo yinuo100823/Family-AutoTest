@@ -6,7 +6,6 @@
 import json
 from .RequestUtil import RequestUtil
 from exts import db
-
 from app.models import Case
 
 
@@ -14,8 +13,45 @@ class CaseRun(RequestUtil):
     def __init__(self):
         super(CaseRun, self).__init__()
 
-    def __assert_response(self, case, response):
-        return {"is_pass": "success", "msg": "测试失败"}
+    def __assert_response(self, case: Case, response: dict):
+        assert_type = None
+        except_result = None
+        is_pass = "fail"  # 是否断言成功的标志
+        msg = ""
+        _assert_content = None  # 需要和预期结果对比的内容，不同的断言类型，内容不一样
+        try:
+            assert_type = json.loads(case.assert_type)
+            except_result = json.loads(case.except_result)
+            if isinstance(except_result.get("content"), str) and except_result.get("content").upper() == "NONE":
+                except_result["content"] = None
+            except_result["not"] = True if isinstance(except_result.get("not"), str) and except_result.get(
+                "not").upper() == "TRUE" else False
+        except Exception as e:
+            msg = "前置数据 or 断言类型 or 预期结果json解析失败，请确认格式，{0}".format(e.args)
+            return {"is_pass": is_pass, "msg": msg}
+        _assert = assert_type.get("type")
+        _assert_content = None
+        if _assert == "resp.data":
+            _assert_content = response.get(assert_type.get("content"))
+        elif _assert == "resp.dataArray":
+            _assert_content = len(response.get(assert_type.get("content")))
+        elif _assert == "resp.code":
+            _assert_content = response.get(assert_type.get("content"))
+        else:
+            msg = "暂不支持的断言类型：{0}".format(_assert)
+            return {"is_pass": is_pass, "msg": msg}
+        flag = _assert_content == except_result.get("content")
+        if except_result.get("not"):
+            if flag:
+                msg = "真实结果【{0}】取反后与期望结果【{1}】不符合".format(_assert_content, except_result.get("content"))
+            else:
+                is_pass = "success"
+        else:
+            if flag:
+                is_pass = "success"
+            else:
+                msg = "真实结果【{0}】与期望结果【{1}】不符合".format(_assert_content, except_result.get("content"))
+        return {"is_pass": is_pass, "msg": msg}
 
     def run_case(self, id):
         case = Case.load_case_by_id(id)

@@ -139,7 +139,7 @@ def case_delete():
 @case.route("/case/<id>/run/", methods=["POST"])
 def case_run_by_id(id):
     case_run.run_case(id)
-    return redirect(url_for(".case_info",id=id))
+    return redirect(url_for(".case_info", id=id))
 
 
 @case.route("/case/quick_search/", methods=["POST"])
