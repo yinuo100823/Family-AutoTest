@@ -1,12 +1,15 @@
-from flask import logging
+from flask import render_template
+from flask_login import login_required
 
 from app import create_app
 
 app = create_app()
-logging = logging.create_logger(app)
-# @app.route('/')
-# def hello_world():
-#     return 'Hello World!'
+
+
+@app.route("/")
+@login_required
+def index():
+    return render_template("index.html")
 
 
 if __name__ == '__main__':

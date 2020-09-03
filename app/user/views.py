@@ -4,7 +4,7 @@
 # @Author : Gery.li
 # @File : views.py
 from flask import render_template, redirect, \
-    request, url_for, g, flash
+    request, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from app.forms import SignForm, LoginForm
 from app.models import User
@@ -43,7 +43,7 @@ def login():
             login_user(user_info, remember)
             next = request.args.get("next")
             if next is None or not next.startswith("/"):
-                next = url_for("home.index")
+                next = url_for("index")
                 return redirect(next)
         flash("用户不存在或密码错误！")
     return render_template("user/login.html", form=form)
@@ -54,7 +54,6 @@ def login():
 def logout():
     logout_user()
     flash("退出成功")
-    print(current_user.__dict__)
     return redirect(url_for(".login"))
 
 

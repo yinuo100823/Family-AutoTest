@@ -7,7 +7,7 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 import config
-from .home import home as home_blueprint
+# from .home import home as home_blueprint
 from .user import user as user_blueprint
 from .case import case as case_blueprint
 from .interface import interface as interface_blueprint
@@ -28,9 +28,9 @@ def create_app():
     # 添加路由和自定义的错误页面
 
     # 注册蓝本
-    app.register_blueprint(home_blueprint)
-    app.register_blueprint(user_blueprint)
-    app.register_blueprint(case_blueprint)
-    app.register_blueprint(interface_blueprint)
-    app.register_blueprint(services_blueprint)
+    # app.register_blueprint(home_blueprint)
+    app.register_blueprint(user_blueprint, url_prefix="/auto/text/")
+    app.register_blueprint(case_blueprint, url_prefix="/auto/text/")
+    app.register_blueprint(interface_blueprint, url_prefix="/auto/text/")
+    app.register_blueprint(services_blueprint, url_prefix="/auto/text/")
     return app

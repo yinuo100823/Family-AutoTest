@@ -12,14 +12,5 @@
             </div>
         </form>
     </div>
-    {% if error %}
-        <div class="error-info">
-            <div class="alert alert-success alert-warning">
-				 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<h4>
-					注意!
-				</h4> <strong>抱歉!</strong> {{ error.get("error") }}
-			</div>
-        </div>
-    {% endif %}
+
 {% endblock %}
