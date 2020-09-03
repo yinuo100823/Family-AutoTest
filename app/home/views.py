@@ -5,25 +5,11 @@
 # @File : views.py
 from app.models import User
 from . import home
-from flask import render_template, session, g
+from flask import render_template
+from flask_login import login_required
 
 
 @home.route("/")
+@login_required
 def index():
     return render_template("home/index.html")
-
-
-@home.before_request
-def before_request():
-    user_id = session.get("user_id")
-    if user_id:
-        user = User.query.filter(User.id == user_id).first()
-        if user:
-            g.user = user
-
-
-@home.context_processor
-def context_processor():
-    if hasattr(g, 'user'):
-        return {"user_info": g.user}
-    return {}

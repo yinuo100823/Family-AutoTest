@@ -75,8 +75,9 @@
             </form>
 
             <ul class="nav navbar-nav navbar-right">
-                {% if user_info %}
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ user_info.mini_name }}</a></li>
+                {#current_user.__dict__!={}当前用户的属性dict不为空，则表示当前用户是登陆状态#}
+                {% if current_user.__dict__!={} %}
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ current_user.mini_name }}</a></li>
                     <li><a href="{{ url_for('user.logout') }}"><span class="glyphicon glyphicon-log-in"></span> 注销</a>
                     </li>
                 {% else %}
@@ -91,6 +92,13 @@
 </nav>
 <div class="main">
     {% block main %}{% endblock %}
+    <br>
+    {% for message in get_flashed_messages() %}
+        <div class="alert success alert-warning">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ message }}
+        </div>
+    {% endfor %}
 </div>
 </body>
 </html>

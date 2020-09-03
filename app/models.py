@@ -3,15 +3,19 @@
 # @Time : 2020/8/25 9:29
 # @Author : Gery.li
 # @File : models.py
-import json
 
-from exts import db
+from exts import db,login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-from common.RequestUtil import RequestUtil
+from flask_login import UserMixin
 
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+class User(db.Model, UserMixin):
     __tablename__ = 'bt_user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, index=True)
     telephone = db.Column(db.String(11), nullable=False, index=True)

@@ -10,15 +10,17 @@ from . import case
 from app.models import User, Case, Interface
 from app.forms import CaseForm, LoginForm, CaseSearchForm, CaseAddForm
 from common.CaseRun import CaseRun
+from flask_login import login_required, current_user
 
 select = "用例管理"
 case_run = CaseRun()
 
 
 @case.route("/case/list", methods=["GET", "POST"])
+@login_required
 def case_list():
     form = CaseSearchForm()
-    cases = Case.query.filter(Case.creater_id == g.user.id).order_by(Case.update_time.desc())
+    cases = Case.query.filter(Case.creater_id == current_user.id).order_by(Case.update_time.desc())
     if request.method == "POST" and form.validate_on_submit():
         service = form.service.data
         interface = form.interface.data
@@ -36,6 +38,7 @@ def case_list():
 
 
 @case.route("/case/<id>/info", methods=["GET", "POST"])
+@login_required
 def case_info(id):
     form = CaseForm()
     case = Case.query.filter(Case.id == id).first()
@@ -77,6 +80,7 @@ def case_info(id):
 
 
 @case.route("/case/create/", methods=["GET", "POST"])
+@login_required
 def case_create():
     form = CaseAddForm()
     if request.method == "POST" and form.validate_on_submit():
@@ -92,7 +96,7 @@ def case_create():
         case.pre_case_id = form.pre_case_id.data if form.pre_case_id.data else None
         case.pre_fields = form.pre_fields.data
         case.except_result = form.except_result.data
-        case.creater_id = g.user.id
+        case.creater_id = current_user.id
         case.assert_type = form.assert_type.data
         case.create_time = datetime.now()
         case.update_time = datetime.now()
@@ -105,6 +109,7 @@ def case_create():
 
 
 @case.route("/case/<id>/copy/", methods=["POST"])
+@login_required
 def case_copy(id):
     case = Case.query.get(id)
     new_case = Case()
@@ -127,6 +132,7 @@ def case_copy(id):
 
 
 @case.route("/case/delete/", methods=["POST"])
+@login_required
 def case_delete():
     id = request.form.get("id")
     case = Case.query.get(id)
@@ -137,35 +143,19 @@ def case_delete():
 
 
 @case.route("/case/<id>/run/", methods=["POST"])
+@login_required
 def case_run_by_id(id):
     case_run.run_case(id)
     return redirect(url_for(".case_info", id=id))
 
 
 @case.route("/case/quick_search/", methods=["POST"])
+@login_required
 def case_quick_search():
     case_form = CaseSearchForm()
-    cases = Case.query.filter(Case.creater_id == g.user.id).order_by(Case.update_time.desc())
+    cases = Case.query.filter(Case.creater_id == current_user.id).order_by(Case.update_time.desc())
     name = request.form.get("name")
     if name:
         cases = [case for case in cases if case.name.find(name) != -1]
         case_form.name.data = name
     return render_template("case/list.html", cases=cases, form=case_form, select=select)
-
-
-@case.before_request
-def before_request():
-    user_id = session.get("user_id")
-    if user_id:
-        user = User.query.filter(User.id == user_id).first()
-        if user:
-            g.user = user
-    else:
-        return render_template("user/login.html", form=LoginForm())
-
-
-@case.context_processor
-def context_processor():
-    if hasattr(g, 'user'):
-        return {"user_info": g.user}
-    return {}

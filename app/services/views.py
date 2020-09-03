@@ -6,12 +6,12 @@
 from datetime import datetime
 from operator import and_
 
-from flask import render_template, redirect, url_for, session, g, request
+from flask import render_template, redirect, url_for, g, request, flash
 from sqlalchemy import and_
-from app.models import User, Service
-from app.forms import ServiceForm, LoginForm
+from app.models import Service
+from app.forms import ServiceForm
 from exts import db
-from flasky import logging
+from flask_login import login_required, current_user
 
 from . import services
 
@@ -19,10 +19,11 @@ select = "服务管理"
 
 
 @services.route("/service/list")
+@login_required
 def service_list():
     name = request.args.get("name")
     host = request.args.get("host")
-    user_id = g.user.id
+    user_id = current_user.id
     if name and host:
         search = and_(Service.creater_id == user_id, Service.name.contains(name),
                       Service.host.contains(host))
@@ -37,9 +38,10 @@ def service_list():
 
 
 @services.route("/services/<id>/info", methods=["GET", "POST"])
+@login_required
 def service_info(id):
     form = ServiceForm()
-    service = Service.query.filter(and_(Service.id == id, Service.creater_id == g.user.id)).first()
+    service = Service.query.filter(and_(Service.id == id)).first()
     if service:
         if request.method == "POST" and form.validate_on_submit():
             service.name = form.name.data
@@ -50,18 +52,18 @@ def service_info(id):
             service.update_time = datetime.now()
             db.session.commit()
             return redirect(url_for(".service_list"))
-        else:
-            form.name.data = service.name
-            form.host.data = service.host
-            form.port.data = service.port
-            form.desc.data = service.desc
-            form.protocol.data = service.protocol
+        form.name.data = service.name
+        form.host.data = service.host
+        form.port.data = service.port
+        form.desc.data = service.desc
+        form.protocol.data = service.protocol
         return render_template("services/info.html", form=form, id=id, select=select)
-    else:
-        return
+    flash("查看的服务不存在，请重试")
+    return redirect(url_for(".service_list"))
 
 
 @services.route("/service/create/", methods=["GET", "POST"])
+@login_required
 def service_create():
     form = ServiceForm()
     if request.method == "POST" and form.validate_on_submit():
@@ -71,29 +73,14 @@ def service_create():
         service.port = form.port.data
         service.desc = form.desc.data
         service.protocol = form.protocol.data
-        service.creater_id = g.user.id
+        service.creater_id = current_user.id
         service.create_time = datetime.now()
         service.update_time = datetime.now()
-        db.session.add(service)
-        db.session.commit()
+        try:
+            db.session.add(service)
+            db.session.commit()
+        except Exception as e:
+            flash("创建服务失败，请重试")
         return redirect(url_for(".service_list"))
-    else:
-        return render_template("services/add.html", form=form, select=select)
+    return render_template("services/add.html", form=form, select=select)
 
-
-@services.before_request
-def before_request():
-    user_id = session.get("user_id")
-    if user_id:
-        user = User.query.filter(User.id == user_id).first()
-        if user:
-            g.user = user
-    else:
-        return render_template("user/login.html", form=LoginForm())
-
-
-@services.context_processor
-def context_processor():
-    if hasattr(g, 'user'):
-        return {"user_info": g.user}
-    return {}

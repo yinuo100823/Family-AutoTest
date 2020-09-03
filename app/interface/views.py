@@ -5,10 +5,12 @@
 # @File : views.py
 from datetime import datetime
 
-from app.forms import LoginForm, InterfaceForm, InterfaceSearchForm
+from flask_login import current_user, login_required
+
+from app.forms import InterfaceForm, InterfaceSearchForm
 from . import interface
-from flask import render_template, session, g, request, flash, redirect, url_for
-from app.models import User, Interface
+from flask import render_template, g, request, flash, redirect, url_for
+from app.models import Interface
 from sqlalchemy import and_
 from exts import db
 
@@ -16,10 +18,10 @@ select = "接口管理"
 
 
 @interface.route("/interface/list", methods=["GET", "POST"])
+@login_required
 def interface_list():
-    user_id = g.user.id
     form = InterfaceSearchForm()
-    interfaces = Interface.query.filter(Interface.creater_id == user_id).order_by(Interface.update_time.desc())
+    interfaces = Interface.query.filter(Interface.creater_id == current_user.id).order_by(Interface.update_time.desc())
     if request.method == "POST" and form.validate_on_submit():
         name = form.name.data
         uri = form.uri.data
@@ -38,6 +40,7 @@ def interface_list():
 
 
 @interface.route("/interface/<id>/info", methods=["GET", "POST"])
+@login_required
 def interface_info(id):
     form = InterfaceForm()
     interface = Interface.query.filter(and_(Interface.id == id, Interface.creater_id == g.user.id)).first()
@@ -67,6 +70,7 @@ def interface_info(id):
 
 
 @interface.route("/interface/create/", methods=["GET", "POST"])
+@login_required
 def interface_create():
     form = InterfaceForm()
     if request.method == "POST" and form.validate_on_submit():
@@ -78,7 +82,7 @@ def interface_create():
         interface.body = form.body.data
         interface.service_id = form.service.data
         interface.desc = form.desc.data
-        interface.creater_id = g.user.id
+        interface.creater_id = current_user.id
         interface.create_time = datetime.now()
         interface.update_time = datetime.now()
         interface.env_type = "测试环境"
@@ -87,21 +91,3 @@ def interface_create():
         return redirect(url_for(".interface_list"))
     else:
         return render_template("interface/add.html", form=form, select=select)
-
-
-@interface.before_request
-def before_request():
-    user_id = session.get("user_id")
-    if user_id:
-        user = User.query.filter(User.id == user_id).first()
-        if user:
-            g.user = user
-    else:
-        return render_template("user/login.html", form=LoginForm())
-
-
-@interface.context_processor
-def context_processor():
-    if hasattr(g, 'user'):
-        return {"user_info": g.user}
-    return {}

@@ -4,8 +4,8 @@
 # @Author : Gery.li
 # @File : views.py
 from flask import render_template, redirect, \
-    request, url_for, session, g, current_app
-
+    request, url_for, g, flash
+from flask_login import login_user, logout_user, current_user, login_required
 from app.forms import SignForm, LoginForm
 from app.models import User
 from . import user
@@ -21,11 +21,13 @@ def sign():
         password = form.password.data
         email = form.email.data
         new_user = User(telephone=telephone, mini_name=mini_name, password=password, email=email)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('user.login'))
-    else:
-        return render_template("user/sign.html", form=form)
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+        except:
+            flash("注册用户失败")
+        return redirect(url_for('.login'))
+    return render_template("user/sign.html", form=form)
 
 
 @user.route("/user/login/", methods=["GET", "POST"])
@@ -38,34 +40,31 @@ def login():
         user_info = User.query.filter(User.telephone == telephone).first()
 
         if user_info and user_info.check_password(password):
-            session["user_id"] = user_info.id
-            if remember:
-                session.permanent = True
-            return redirect(url_for("home.index"))
-        else:
-            return render_template("user/login.html", error={"error": "用户不存在或密码错误！"}, form=form)
-    else:
-        return render_template("user/login.html", form=form)
+            login_user(user_info, remember)
+            next = request.args.get("next")
+            if next is None or not next.startswith("/"):
+                next = url_for("home.index")
+                return redirect(next)
+        flash("用户不存在或密码错误！")
+    return render_template("user/login.html", form=form)
 
 
 @user.route("/logout/")
+@login_required
 def logout():
-    if hasattr(g, "user"):
-        session.pop("user_id")
-    return redirect(url_for("user.login"))
+    logout_user()
+    flash("退出成功")
+    print(current_user.__dict__)
+    return redirect(url_for(".login"))
 
 
-@user.before_request
-def before_request():
-    user_id = session.get("user_id")
-    if user_id:
-        user = User.query.filter(User.id == user_id).first()
-        if user:
-            g.user = user
+# @user.before_app_request
+# def before_request():
+#     g.user = current_user
 
 
-@user.context_processor
-def context_processor():
-    if hasattr(current_app, 'user'):
-        return {"user_info": g.user}
-    return {}
+# @user.context_processor
+# def context_processor():
+#     if hasattr(g, 'user'):
+#         return {"user_info": g.user}
+#     return {}

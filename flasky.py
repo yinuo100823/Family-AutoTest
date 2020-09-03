@@ -1,4 +1,4 @@
-from flask import Flask, logging
+from flask import logging
 
 from app import create_app
 

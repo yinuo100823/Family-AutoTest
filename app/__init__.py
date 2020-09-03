@@ -12,10 +12,10 @@ from .user import user as user_blueprint
 from .case import case as case_blueprint
 from .interface import interface as interface_blueprint
 from .services import services as services_blueprint
-from exts import db
-
+from exts import db, login_manager
 
 bootstrap = Bootstrap()
+login_manager.login_view = "user.login"
 
 
 def create_app():
@@ -23,6 +23,7 @@ def create_app():
     app.config.from_object(config)
     bootstrap.init_app(app)
     db.init_app(app)
+    login_manager.init_app(app)
 
     # 添加路由和自定义的错误页面
 

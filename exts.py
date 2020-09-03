@@ -3,6 +3,8 @@
 # @Time : 2020/8/21 13:26
 # @Author : Gery.li
 # @File : exts.py
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+login_manager = LoginManager()
