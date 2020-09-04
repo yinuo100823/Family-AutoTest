@@ -8,6 +8,7 @@ from flask import render_template, redirect, \
 from flask_login import login_user, logout_user, current_user, login_required
 from app.forms import SignForm, LoginForm
 from app.models import User
+from common.Constant import FlashEnum
 from . import user
 from exts import db
 
@@ -25,7 +26,7 @@ def sign():
             db.session.add(new_user)
             db.session.commit()
         except:
-            flash("注册用户失败")
+            flash("注册用户失败",FlashEnum.warning.name)
         return redirect(url_for('.login'))
     return render_template("user/sign.html", form=form)
 
@@ -45,7 +46,7 @@ def login():
             if next is None or not next.startswith("/"):
                 next = url_for("index")
                 return redirect(next)
-        flash("用户不存在或密码错误！")
+        flash("用户不存在或密码错误！", FlashEnum.warning.name)
     return render_template("user/login.html", form=form)
 
 
@@ -53,9 +54,8 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash("退出成功")
+    flash("退出成功", FlashEnum.success.name)
     return redirect(url_for(".login"))
-
 
 # @user.before_app_request
 # def before_request():

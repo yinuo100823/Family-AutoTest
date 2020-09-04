@@ -1,21 +1,30 @@
 * {
     margin: 0;
 }
-.navbar.navbar-inverse.navbar-fixed-top a{
+/*顶部导航栏样式*/
+.navbar.navbar-inverse.navbar-fixed-top a {
     color: #fff0dc !important;
     font-size: large;
 }
-.navbar.navbar-inverse.navbar-fixed-top .dropdown a,.dropdown-menu a{
+
+.navbar.navbar-inverse.navbar-fixed-top .dropdown a, .dropdown-menu a {
     color: #f34535 !important;
 }
 
-.navbar.navbar-inverse.navbar-fixed-top .dropdown-menu a{
+.navbar.navbar-inverse.navbar-fixed-top .dropdown-menu a {
     color: #080202 !important;
+}
+
+/*页面闪现提示样式*/
+.flash-message {
+    width: 500px;
+    height: 60px;
+    margin-left: 10%;
 }
 
 #content-body {
     background-color: #dadada;
-    padding: 100px;
+    padding: 60px;
 }
 
 /*主展示区域样式设置*/
@@ -23,8 +32,9 @@
     background: #fff;
     width: 80%;
     margin: 0 auto;
-    overflow: hidden;
+    /*overflow: hidden;*/
     padding: 30px;
+    border-radius: 0.5%;
 }
 
 
@@ -95,7 +105,26 @@ td.padding-0px {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
+
 /*详情页and创建页面返回按钮去掉padding*/
-form.navbar-form.navbar-left{
+form.navbar-form.navbar-left {
     padding: 0;
+}
+
+/*测试用例页面快速导航*/
+div.case-selection {
+    position: fixed;
+    top: 40%;
+    right: 20%;
+    border-radius: 2%;
+}
+div.case-selection ul.case-selection-list li{
+    list-style: none;
+    color: red;
+    margin-top: 10px;
+}
+
+div.case-selection ul.case-selection-list li a:hover{
+    list-style: none;
+    color: red;
 }
