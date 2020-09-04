@@ -4,11 +4,13 @@
     {#    <link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">#}
 {% endblock %}
 {% block selection %}
-    <div class="selection" style="float: left">
-        <p>快速导航</p>
-        <p><a href="#content-body">回到顶部</a></p>
-        <p><a href="#request-header">请求体(body)</a></p>
-        <p><a href="#request-pre-fields">前置数据</a></p>
+    <div class="case-selection">
+        <ul class="case-selection-list">
+            <li>| 快速导航...</li>
+            <li>| <a href="#content-body">回到顶部</a></li>
+            <li>| <a href="#request-header">请求体(body)</a></li>
+            <li>| <a href="#request-pre-fields">前置数据</a></li>
+        </ul>
     </div>
 {% endblock %}
 {% block main %}
