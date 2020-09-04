@@ -3,12 +3,20 @@
 {% block head %}
     {#    <link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">#}
 {% endblock %}
+{% block selection %}
+    <div class="selection" style="float: left">
+        <p>快速导航</p>
+        <p><a href="#content-body">回到顶部</a></p>
+        <p><a href="#request-header">请求体(body)</a></p>
+        <p><a href="#request-pre-fields">前置数据</a></p>
+    </div>
+{% endblock %}
 {% block main %}
     <div class="content-box-60">
         <form class="navbar-form navbar-left" role="search" action="{{ url_for('case.case_list') }}">
             <div class="form-group btn-right">
                 <button type="submit" class="btn btn-default">
-                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                 </button>
             </div>
         </form>

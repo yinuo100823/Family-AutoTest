@@ -4,13 +4,14 @@
 # @Author : Gery.li
 # @File : views.py
 from datetime import datetime
-from flask import render_template, session, request, url_for, g, redirect, flash
+from flask import render_template, request, url_for, g, redirect, flash
 from exts import db
 from . import case
-from app.models import User, Case, Interface
-from app.forms import CaseForm, LoginForm, CaseSearchForm, CaseAddForm
+from app.models import Case, Interface
+from app.forms import CaseForm, CaseSearchForm, CaseAddForm
 from common.CaseRun import CaseRun
 from flask_login import login_required, current_user
+from common.Constant import FlashEnum
 
 select = "用例管理"
 case_run = CaseRun()
@@ -59,8 +60,11 @@ def case_info(id):
             case.is_pass = None
             case.msg = None
             case.resp = None
-            db.session.commit()
-            return redirect(url_for(".case_list"))
+            try:
+                db.session.commit()
+                flash("保存成功", FlashEnum.success.name)
+            except:
+                flash("更新失败", FlashEnum.warning.name)
         else:
             form.interface.data = case.interface_id
             form.name.data = case.name
@@ -76,7 +80,8 @@ def case_info(id):
             form.resp.data = case.resp
         return render_template("case/info.html", form=form, id=id, select=select)
     else:
-        return
+        flash("您编辑的测试用例不存在", FlashEnum.warning.name)
+        return redirect(url_for(".case_list"))
 
 
 @case.route("/case/create/", methods=["GET", "POST"])
@@ -100,9 +105,13 @@ def case_create():
         case.assert_type = form.assert_type.data
         case.create_time = datetime.now()
         case.update_time = datetime.now()
+        try:
 
-        db.session.add(case)
-        db.session.commit()
+            db.session.add(case)
+            db.session.commit()
+            flash("创建成功", FlashEnum.success.name)
+        except:
+            flash("创建失败", FlashEnum.warning.name)
         return redirect(url_for(".case_list"))
     else:
         return render_template("case/add.html", form=form, select=select)
@@ -128,6 +137,7 @@ def case_copy(id):
     new_case.create_time = datetime.now()
     db.session.add(new_case)
     db.session.commit()
+    flash("复制成功", FlashEnum.success.name)
     return redirect(url_for(".case_list"))
 
 
@@ -139,6 +149,7 @@ def case_delete():
     if case:
         db.session.delete(case)
         db.session.commit()
+        flash("删除成功", FlashEnum.success.name)
     return redirect(url_for(".case_list"))
 
 
@@ -146,6 +157,7 @@ def case_delete():
 @login_required
 def case_run_by_id(id):
     case_run.run_case(id)
+    flash("调试完成，请详情页查看调试结果", FlashEnum.success.name)
     return redirect(url_for(".case_info", id=id))
 
 

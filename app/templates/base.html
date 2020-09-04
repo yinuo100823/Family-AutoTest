@@ -17,7 +17,7 @@
 <body id="content-body">
 {#<nav class="side-navbar" id="navbar"></nav>#}
 {#顶部导航   navbar-fixed-top#}
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <a class="navbar-brand" href="#">
         <img class='logo' src="{{ url_for('static',filename='img/logo.png') }}" alt="logo">
     </a>
@@ -90,15 +90,28 @@
         </div>
     </div>
 </nav>
-<div class="main">
-    {% block main %}{% endblock %}
-    <br>
-    {% for message in get_flashed_messages() %}
-        <div class="alert success alert-warning">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ message }}
-        </div>
-    {% endfor %}
-</div>
+
+    <div class="flash-message">
+        {% for category,message in get_flashed_messages(with_categories=true) %}
+            {% if category=="success" %}
+                <div class="alert alert-success">
+            {% elif category=="warning" %}
+                <div class="alert alert-warning">
+            {% elif category=="danger" %}
+                <div class="alert alert-danger">
+            {% else %}
+                <div class="alert alert-info">
+            {% endif %}
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times</button>
+                    {{ message }}
+                </div>
+        {% endfor %}
+    </div>
+
+    <div class="main" id="main">
+        {% block selection %}{% endblock %}
+        {% block main %}{% endblock %}
+    </div>
+
 </body>
 </html>
