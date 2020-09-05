@@ -25,52 +25,67 @@
         </thead>
         <tbody>
         {% for case in cases %}
-        <tr class="tr-td">
-            <td class="td">{{ case.id }}</td>
-            <td class="td"><a
-                    href="{{ url_for('services.service_info',id=case.service.id) }}">{{ case.service.name }}</a>
-            </td>
-            <td class="td"><a
-                    href="{{ url_for('interface.interface_info',id=case.interface.id) }}">{{ case.interface.name }}</a>
-            </td>
-            <td class="td">{{ case.name }}</td>
-            {% if case.is_run=="Yes" %}
-                <td class="td"><span class="label label-primary">是</span></td>
-            {% else %}
-                <td class="td"><span class="label label-default">否</span></td>
-            {% endif %}
-            {% if case.is_pass=="success" %}
-                <td class="td"><span class="label label-success">成功</span></td>
-            {% elif case.is_pass=="fail" %}
-                <td class="td"><span class="label label-danger">失败</span></td>
-            {% else %}
-                <td class="td"></td>
-            {% endif %}
-            <td class="td">{{ case.update_time }}</td>
-            <td class="padding-0px">
-                <form action="{{ url_for('case.case_info',id=case.id) }}" class="form-container">
-                    <button class="btn btn-primary">详情</button>
-                </form>
-            </td>
-            <td class="padding-0px">
-                <form action="{{ url_for('case.case_delete') }}" class="form-container" method="post">
-                    <input type="text" name="id" style="display: none" value="{{ case.id }}">
-                    <button class="btn btn-danger">删除</button>
-                </form>
-            </td>
-            <td class="padding-0px">
-                <form action="{{ url_for('case.case_copy',id=case.id) }}" class="form-container" method="post">
-                    <button class="btn btn-success">复制</button>
-                </form>
-            </td>
-            <td class="padding-0px">
-                <form action="{{ url_for('case.case_run_by_id',id=case.id) }}" class="form-container" method="post">
-                    <input type="text" name="from_type" style="display: none" value="from_list">
-                    <button class="btn btn-danger">调试</button>
-                </form>
-            </td>
+            <tr class="tr-td">
+                <td class="td">{{ case.id }}</td>
+                <td class="td"><a
+                        href="{{ url_for('services.service_info',id=case.service.id) }}">{{ case.service.name }}</a>
+                </td>
+                <td class="td"><a
+                        href="{{ url_for('interface.interface_info',id=case.interface.id) }}">{{ case.interface.name }}</a>
+                </td>
+                <td class="td">{{ case.name }}</td>
+                {% if case.is_run=="Yes" %}
+                    <td class="td"><span class="label label-primary">是</span></td>
+                {% else %}
+                    <td class="td"><span class="label label-default">否</span></td>
+                {% endif %}
+                {% if case.is_pass=="success" %}
+                    <td class="td"><span class="label label-success">成功</span></td>
+                {% elif case.is_pass=="fail" %}
+                    <td class="td"><span class="label label-danger">失败</span></td>
+                {% else %}
+                    <td class="td"></td>
+                {% endif %}
+                <td class="td">{{ case.update_time }}</td>
+                <td class="padding-0px">
+                    <form action="{{ url_for('case.case_info',id=case.id) }}" class="form-container">
+                        <button class="btn btn-primary">详情</button>
+                    </form>
+                </td>
+                <td class="padding-0px">
+                    <form action="{{ url_for('case.case_delete') }}" class="form-container" method="post">
+                        <input type="text" name="id" style="display: none" value="{{ case.id }}">
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#delete">删除</button>
+                    </form>
+                </td>
+                <td class="padding-0px">
+                    <form action="{{ url_for('case.case_copy',id=case.id) }}" class="form-container" method="post">
+                        <button class="btn btn-success">复制</button>
+                    </form>
+                </td>
 
-        </tr>
+                <td class="padding-0px">
+
+                    <form action="{{ url_for('case.case_run_by_id',id=case.id) }}" class="form-container" method="post">
+
+                        <input type="text" name="from_type" style="display: none" value="from_list">
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#run">调试</button>
+{#                        <div class="modal fade" id="run" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"#}
+{#                             aria-hidden="true">#}
+{#                            <div class="modal-dialog" style="width: 240px">#}
+{#                                <div class="modal-content">#}
+{#                                    <div class="modal-body">是否确认调试？</div>#}
+{#                                    <div class="modal-footer">#}
+{#                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>#}
+{#                                        <button type="submit" class="btn btn-primary">确认</button>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+                    </form>
+                </td>
+
+            </tr>
         {% endfor %}
         </tbody>
     </table>

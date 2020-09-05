@@ -94,7 +94,7 @@
     <div class="flash-message">
         {% for category,message in get_flashed_messages(with_categories=true) %}
             {% if category=="success" %}
-                <div class="alert alert-success">
+                <div class="alert alert-success alert-dismissable">
             {% elif category=="warning" %}
                 <div class="alert alert-warning">
             {% elif category=="danger" %}
