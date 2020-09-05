@@ -156,8 +156,10 @@ def case_delete():
 @case.route("/case/<id>/run/", methods=["POST"])
 @login_required
 def case_run_by_id(id):
-    case_run.run_case(id)
-    flash("调试完成，请详情页查看调试结果", FlashEnum.success.name)
+    msg = case_run.run_case(id)
+    flash(msg, FlashEnum.success.name)
+    if request.form.get("from_type") == "from_list":
+        return redirect(url_for(".case_list"))
     return redirect(url_for(".case_info", id=id))
 
 
