@@ -102,3 +102,4 @@ class CaseRun(RequestUtil):
         case.msg = assert_result.get("msg")
         case.resp = json.dumps(response, ensure_ascii=False)
         db.session.commit()
+        return case.msg+"-->resp:"+str(case.resp) if case.msg else case.resp
