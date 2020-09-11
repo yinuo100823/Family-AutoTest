@@ -120,24 +120,27 @@ def case_create():
 @case.route("/case/<id>/copy/", methods=["POST"])
 @login_required
 def case_copy(id):
-    case = Case.query.get(id)
-    new_case = Case()
-    new_case.service_id = case.service_id
-    new_case.interface_id = case.interface_id
-    new_case.name = case.name + "--复制"
-    new_case.is_run = case.is_run
-    new_case.headers = case.headers
-    new_case.body = case.body
-    new_case.pre_case_id = case.pre_case_id
-    new_case.pre_fields = case.pre_fields
-    new_case.except_result = case.except_result
-    new_case.assert_type = case.assert_type
-    new_case.creater_id = case.creater_id
-    new_case.update_time = datetime.now()
-    new_case.create_time = datetime.now()
-    db.session.add(new_case)
-    db.session.commit()
-    flash("复制成功", FlashEnum.success.name)
+    try:
+        case = Case.query.get(id)
+        new_case = Case()
+        new_case.service_id = case.service_id
+        new_case.interface_id = case.interface_id
+        new_case.name = case.name + "--复制"
+        new_case.is_run = case.is_run
+        new_case.headers = case.headers
+        new_case.body = case.body
+        new_case.pre_case_id = case.pre_case_id
+        new_case.pre_fields = case.pre_fields
+        new_case.except_result = case.except_result
+        new_case.assert_type = case.assert_type
+        new_case.creater_id = case.creater_id
+        new_case.update_time = datetime.now()
+        new_case.create_time = datetime.now()
+        db.session.add(new_case)
+        db.session.commit()
+        flash("复制成功", FlashEnum.success.name)
+    except:
+        flash("由于字段过 or 数据库连接失败长导致复制失败", FlashEnum.danger.name)
     return redirect(url_for(".case_list"))
 
 
@@ -156,8 +159,11 @@ def case_delete():
 @case.route("/case/<id>/run/", methods=["POST"])
 @login_required
 def case_run_by_id(id):
-    msg = case_run.run_case(id)
-    flash(msg, FlashEnum.success.name)
+    is_pass, msg = case_run.run_case(id)
+    if is_pass == "success":
+        flash(msg, FlashEnum.success.name)
+    else:
+        flash(msg, FlashEnum.warning.name)
     if request.form.get("from_type") == "from_list":
         return redirect(url_for(".case_list"))
     return redirect(url_for(".case_info", id=id))

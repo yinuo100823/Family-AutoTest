@@ -1,130 +1,63 @@
-* {
-    margin: 0;
-}
-/*顶部导航栏样式*/
-.navbar.navbar-inverse.navbar-fixed-top a {
-    color: #fff0dc !important;
-    font-size: large;
-}
-
-.navbar.navbar-inverse.navbar-fixed-top .dropdown a, .dropdown-menu a {
-    color: #f34535 !important;
-}
-
-.navbar.navbar-inverse.navbar-fixed-top .dropdown-menu a {
-    color: #080202 !important;
-}
-
-/*页面闪现提示样式*/
-.flash-message {
-    width: 500px;
-    height: 60px;
-    margin-left: 10%;
-}
-
-#content-body {
-    background-color: #dadada;
-    padding: 60px;
-}
-
-/*主展示区域样式设置*/
-.main {
-    background: #fff;
-    width: 80%;
-    margin: 0 auto;
-    /*overflow: hidden;*/
-    padding: 30px;
-    border-radius: 0.5%;
-}
-
-
-.navbar-brand {
-    overflow: hidden;
-    padding: 0;
-}
-
-/*logo图片大小设置*/
-.logo {
-    margin: 10px 0 0 30px;
-    vertical-align: middle;
-    border-radius: 20%;
-}
-
-/*登陆和注册按钮分开距离*/
-#bs-example-navbar-collapse-1 ul.navbar-right {
-    padding: 0 30px;
-}
-
-/*主内容区域标题居中*/
-.page-title {
-    text-align: center;
-}
-
-.content-box-40 {
-    width: 40%;
-    margin: 0 auto;
-}
-
-.content-box-60 {
-    width: 60%;
-    margin: 0 auto;
-}
-
-.tr-td .td {
-    padding-top: 15px !important;
-}
-
-/*列表页面的搜索区域*/
-div.search {
+/*----------------头部--->开始-------------------*/
+#header{
     width: 100%;
-    overflow: hidden;
-    padding: 0 50px 20px 0;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #f3f3f3;
-}
-
-/*列表页面的搜索区域中的form表单*/
-div.search form.navbar-form {
-    width: 100%;
-    overflow: hidden;
-    padding: 0;
-}
-
-/*列表页面的搜索区域中的form表单中的元素分开距离*/
-div.search div.form-group {
-    margin-right: 30px;
-}
-
-div.search div.create {
-    float: left;
-    margin-top: 20px;
-}
-
-/*列表中的按钮距离减少*/
-td.padding-0px {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-/*详情页and创建页面返回按钮去掉padding*/
-form.navbar-form.navbar-left {
-    padding: 0;
-}
-
-/*测试用例页面快速导航*/
-div.case-selection {
+    height: 5rem;
+    border-bottom: 1px solid #000;
     position: fixed;
-    top: 40%;
-    right: 20%;
-    border-radius: 2%;
+    top:0;
+    left:0;
 }
-div.case-selection ul.case-selection-list li{
-    list-style: none;
-    color: red;
-    margin-top: 10px;
+#header .header-center{
+    height: 100%;
+    display: flex;
+    justify-content:center;
+    min-width: 80rem;
 }
 
-div.case-selection ul.case-selection-list li a:hover{
-    list-style: none;
-    color: red;
+/*左侧*/
+#header .header-center .header-center-l{
+    height: 100%;
+    flex: 1;
+    min-width:25rem ;
 }
+
+#header .header-center .header-center-l a.header-center-l-logo{
+    line-height: 5rem;
+    width: 5rem;
+    height: 5rem;
+    margin: 0 1.5rem;
+}
+
+/*中间导航*/
+#header .header-center .header-center-c{
+    height: 100%;
+    /*background-color: #f34535;*/
+    flex: 4;
+    line-height: 5rem;
+
+}
+#header .header-center .header-center-c ul li{
+    display: inline-block;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    margin-left: 3rem;
+    background-color: rgba(0,0,0,.1);
+}
+/*右侧*/
+#header .header-center .header-center-r{
+    height: 100%;
+    line-height: 5rem;
+    flex: 1;
+}
+
+#header .header-center .header-center-r ul li{
+    display: inline-block;
+    margin-right: 1.5rem;
+}
+
+/*----------------头部--->结束-------------------*/
+
+/*----------------主要内容--->开始-------------------*/
+
+/*----------------主要内容--->结束-------------------*/

@@ -55,7 +55,7 @@
                 <td class="padding-0px">
                     <form action="{{ url_for('case.case_delete') }}" class="form-container" method="post">
                         <input type="text" name="id" style="display: none" value="{{ case.id }}">
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#delete">删除</button>
+                        <button class="btn btn-danger">删除</button>
                     </form>
                 </td>
                 <td class="padding-0px">
@@ -69,19 +69,7 @@
                     <form action="{{ url_for('case.case_run_by_id',id=case.id) }}" class="form-container" method="post">
 
                         <input type="text" name="from_type" style="display: none" value="from_list">
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#run">调试</button>
-{#                        <div class="modal fade" id="run" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"#}
-{#                             aria-hidden="true">#}
-{#                            <div class="modal-dialog" style="width: 240px">#}
-{#                                <div class="modal-content">#}
-{#                                    <div class="modal-body">是否确认调试？</div>#}
-{#                                    <div class="modal-footer">#}
-{#                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>#}
-{#                                        <button type="submit" class="btn btn-primary">确认</button>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
+                        <button class="btn btn-danger" >调试</button>
                     </form>
                 </td>
 

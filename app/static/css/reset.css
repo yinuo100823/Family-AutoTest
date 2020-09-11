@@ -1,0 +1,82 @@
+@charset "UTF-8";
+body, button, dd, dl, dt, fieldset, form,
+h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p,
+pre, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+}
+
+html {
+    font-size: 10px;
+}
+body {
+    background-color: rgba(255, 255, 255, 0.05);
+    display: block;
+    font: 1.6rem/1.5 Microsoft YaHei,Heiti SC,tahoma,arial,Hiragino Sans GB,"\5B8B\4F53",sans-serif;
+}
+/*清除列表的默认风格*/
+ul,ol,dl{
+    list-style: none;
+}
+
+/*表单相关*/
+fieldset,img,input,button,textarea{
+    border: none;
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+/*超链接标签*/
+a{
+    color: #999999;
+    text-decoration: none;
+}
+a:hover{
+    color: #f34535;
+    text-decoration: none;
+}
+
+/*h家族*/
+h1,h2,h3,h4,h5,h6{
+    font-weight: normal;
+    font-size: 100%;
+}
+
+/*清除浮动*/
+.clearfix::before,
+.clearfix::after{
+    content: '';
+    display: table;
+    clear: both;
+}
+
+/*版心设置*/
+.w{
+    width: 92%;
+    margin: 0 auto;
+    min-width: 90rem;
+}
+
+/*左右浮动*/
+.fl{
+    float: left;
+}
+
+.fr{
+    float: right;
+}
+
+/*水平对齐*/
+.tl{
+    text-align: left;
+}
+.tr{
+    text-align: right;
+}
+.tc{
+    text-align: center;
+}
+

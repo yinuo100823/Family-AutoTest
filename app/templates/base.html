@@ -9,75 +9,50 @@
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/base.css') }}">
+
     <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/base.css') }}">
     {% import "bootstrap/wtf.html" as wtf %}
     {% block head %}{% endblock %}
+
 </head>
-<body id="content-body">
-{#<nav class="side-navbar" id="navbar"></nav>#}
-{#顶部导航   navbar-fixed-top#}
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <a class="navbar-brand" href="#">
-        <img class='logo' src="{{ url_for('static',filename='img/logo.png') }}" alt="logo">
-    </a>
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
+<body>
+{#------------------------头部--->开始-----------------------------#}
+<header id="header">
+    <div class="header-center w clearfix">
+        {#头部左侧#}
+        <div class="header-center-l tl fl">
+            <a class="header-center-l-logo" href="{{ url_for('index') }}">
+                <img class='logo' src="{{ url_for('static',filename='img/logo.png') }}" alt="logo">
+                <span>Welcome To AutoTest</span>
+            </a>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active1">
-                    <a href="">首页</a>
-                </li>
-                <li>
-                    <a href="{{ url_for("case.case_create") }}">新建测试用例</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        {% if select %}
-                            {{ select }}
-                        {% else %}
-                            选择菜单
-                        {% endif %}
-                        <strong class="caret"></strong>
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% for item in [
-                                {"url":"index","title":"平台首页"},
-                                {"url":"case.case_list","title":"用例管理"},
-                                {"url":"interface.interface_list","title":"接口管理"},
-                                {"url":"services.service_list","title":"服务管理"},
-                            ] %}
-                            <li role="separator" class="divider"></li>
-                            <li style="background-color: #dadada">
-                                <a href="{{ url_for(item.get('url')) }}">{{ item.get('title') }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </li>
+        {#头部中间导航#}
+        <div class="header-center-c fl tc">
+            <ul class="header-center-c-menu">
+                {% for item in [
+                    {"url":"index","title":"首页"},
+                    {"url":"case.case_list","title":"用例"},
+                    {"url":"interface.interface_list","title":"接口"},
+                    {"url":"services.service_list","title":"应用"},
+                    {"url":"services.service_list","title":"其他"},
+                    {"url":"services.service_list","title":"其他"},
+                    {"url":"services.service_list","title":"其他"},
+                ] %}
+                    <li>
+                        <a href="{{ url_for(item.get('url')) }}">{{ item.get('title') }}</a>
+                    </li>
+                {% endfor %}
             </ul>
-            <form class="navbar-form navbar-left" role="search" action="{{ url_for('case.case_quick_search') }}"
-                  method="post">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="name" placeholder="请输入测试用例名称"/>
-                </div>
-                <button type="submit" class="btn btn-default btn-primary">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button>
-            </form>
-
-            <ul class="nav navbar-nav navbar-right">
+        </div>
+        {#头部右侧#}
+        <div class="header-center-r fr tr">
+            <ul class="header-center-r-user">
                 {#current_user.__dict__!={}当前用户的属性dict不为空，则表示当前用户是登陆状态#}
                 {% if current_user.__dict__!={} %}
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ current_user.mini_name }}</a></li>
+                    <li><a href="javascript:;"><span
+                            class="glyphicon glyphicon-user"></span> {{ current_user.mini_name }}</a></li>
                     <li><a href="{{ url_for('user.logout') }}"><span class="glyphicon glyphicon-log-in"></span> 注销</a>
                     </li>
                 {% else %}
@@ -85,33 +60,11 @@
                     </li>
                     <li><a href="{{ url_for('user.sign') }}"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
                 {% endif %}
-
             </ul>
         </div>
     </div>
-</nav>
-
-    <div class="flash-message">
-        {% for category,message in get_flashed_messages(with_categories=true) %}
-            {% if category=="success" %}
-                <div class="alert alert-success alert-dismissable">
-            {% elif category=="warning" %}
-                <div class="alert alert-warning">
-            {% elif category=="danger" %}
-                <div class="alert alert-danger">
-            {% else %}
-                <div class="alert alert-info">
-            {% endif %}
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times</button>
-                    {{ message }}
-                </div>
-        {% endfor %}
-    </div>
-
-    <div class="main" id="main">
-        {% block selection %}{% endblock %}
-        {% block main %}{% endblock %}
-    </div>
-
+</header>
+{#------------------------头部--->结束-----------------------------#}
 </body>
+
 </html>
