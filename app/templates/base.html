@@ -30,21 +30,7 @@
         </div>
         {#头部中间导航#}
         <div class="header-center-c fl tc">
-            <ul class="header-center-c-menu">
-                {% for item in [
-                    {"url":"index","title":"首页"},
-                    {"url":"case.case_list","title":"用例"},
-                    {"url":"interface.interface_list","title":"接口"},
-                    {"url":"services.service_list","title":"应用"},
-                    {"url":"services.service_list","title":"其他"},
-                    {"url":"services.service_list","title":"其他"},
-                    {"url":"services.service_list","title":"其他"},
-                ] %}
-                    <li>
-                        <a href="{{ url_for(item.get('url')) }}">{{ item.get('title') }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+
         </div>
         {#头部右侧#}
         <div class="header-center-r fr tr">
@@ -65,6 +51,51 @@
     </div>
 </header>
 {#------------------------头部--->结束-----------------------------#}
+{#------------------------主要内容--->开始-----------------------------#}
+<main id="main" class="clearfix">
+    <section class="main-center clearfix">
+        <div class="main-center-c">
+            {% block main %}{% endblock %}
+        </div>
+    </section>
+    <section class="main-left">
+        {% block menu %}
+
+        {% endblock %}
+
+    </section>
+    <section class="main-right">
+
+    </section>
+
+</main>
+{#------------------------主要内容--->结束-----------------------------#}
+
+{# ============闪现消息=================#}
+    <div class="flash-message">
+    {% for category,message in get_flashed_messages(with_categories=true) %}
+        {% if category=="success" %}
+            <div class="alert alert-success alert-dismissable">
+        {% elif category=="warning" %}
+            <div class="alert alert-warning">
+        {% elif category=="danger" %}
+            <div class="alert alert-danger">
+        {% else %}
+            <div class="alert alert-info">
+        {% endif %}
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times</button>{{ message }}
+    </div>
+    {% endfor %}
+    </div>
+{#------------------------底部--->开始-----------------------------#}
+<footer id="footer">
+    <div class="footer-right">
+        <p>534003512@qq.com</p>
+        <p>一起探索<strong>自动化测试</strong></p>
+    </div>
+</footer>
+{#------------------------底部--->结束-----------------------------#}
+
 </body>
 
 </html>

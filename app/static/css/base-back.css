@@ -117,50 +117,9 @@ input, button {
     padding: 0;
 }
 
-/*logo图片大小设置*/
-.logo {
-    margin: 10px 0 0 30px;
-    vertical-align: middle;
-    border-radius: 20%;
-}
-
-/*登陆和注册按钮分开距离*/
-#bs-example-navbar-collapse-1 ul.navbar-right {
-    padding: 0 30px;
-}
-
-/*主内容区域标题居中*/
-.page-title {
-    text-align: center;
-}
-
-.content-box-40 {
-    width: 40%;
-    margin: 0 auto;
-}
-
-.content-box-60 {
-    width: 60%;
-    margin: 0 auto;
-}
 
 .tr-td .td {
     padding-top: 15px !important;
-}
-
-/*列表页面的搜索区域*/
-div.search {
-    position: sticky;
-    z-index: 1;
-    top: 53px;
-    background-color: #ffffff;
-    width: 100%;
-    overflow: hidden;
-    padding: 0 0 20px 0;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #211af3;
-
-
 }
 
 /*列表页面的搜索区域中的form表单*/
@@ -176,21 +135,21 @@ div.search div.form-group {
 }
 
 div.search div.create {
-    float: left;
+    /*float: left;*/
     margin-top: 20px;
 }
 
 /*列表中的按钮距离减少*/
-td.padding-0px {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    position: -webkit-sticky;
-    position: sticky;
+/*td.padding-0px {*/
+    /*padding-left: 0 !important;*/
+    /*padding-right: 0 !important;*/
+    /*position: -webkit-sticky;*/
+    /*position: sticky;*/
 
 
-    top: 52px;
-    background-color: #ffffff;
-}
+    /*top: 52px;*/
+    /*background-color: #ffffff;*/
+/*}*/
 
 /*详情页and创建页面返回按钮去掉padding*/
 form.navbar-form.navbar-left {
