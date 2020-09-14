@@ -1,4 +1,4 @@
-{% extends 'base_menu.html' %}
+{% extends 'base_ext.html' %}
 {% block title %}测试用例详情{% endblock %}
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/reset.css') }}">
@@ -37,5 +37,15 @@
                 {{ wtf.quick_form(form) }}
             </div>
         </form>
+    </div>
+
+    {#============长页面埋点导航============#}
+    <div class="quick-point">
+        <ul>
+            <li>快速导航...</li>
+            <li><a href="#main">回到顶部</a></li>
+            <li><a href="#request-header">请求体(body)</a></li>
+            <li><a href="#request-pre-fields">前置数据</a></li>
+        </ul>
     </div>
 {% endblock %}

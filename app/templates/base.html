@@ -56,6 +56,7 @@
     <section class="main-center clearfix">
         <div class="main-center-c">
             {% block main %}{% endblock %}
+
         </div>
     </section>
     <section class="main-left">
@@ -72,21 +73,22 @@
 {#------------------------主要内容--->结束-----------------------------#}
 
 {# ============闪现消息=================#}
-    <div class="flash-message">
-    {% for category,message in get_flashed_messages(with_categories=true) %}
-        {% if category=="success" %}
-            <div class="alert alert-success alert-dismissable">
-        {% elif category=="warning" %}
-            <div class="alert alert-warning">
-        {% elif category=="danger" %}
-            <div class="alert alert-danger">
-        {% else %}
-            <div class="alert alert-info">
-        {% endif %}
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times</button>{{ message }}
-    </div>
-    {% endfor %}
-    </div>
+<div class="flash-message">
+{% for category,message in get_flashed_messages(with_categories=true) %}
+    {% if category=="success" %}
+        <div class="alert alert-success alert-dismissable">
+    {% elif category=="warning" %}
+        <div class="alert alert-warning">
+    {% elif category=="danger" %}
+        <div class="alert alert-danger">
+    {% else %}
+        <div class="alert alert-info">
+    {% endif %}
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times</button>{{ message }}
+</div>
+{% endfor %}
+</div>
+
 {#------------------------底部--->开始-----------------------------#}
 <footer id="footer">
     <div class="footer-right">

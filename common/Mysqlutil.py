@@ -2,9 +2,9 @@
 # -*- coding:utf-8 -*-
 # @Time : 2020/6/2 10:02
 # @Author : Gery.li
-# @File : MysqlUtil.py
+# @File : Mysqlutil.py
+import datetime
 import pymysql
-import config
 
 
 class MysqlUtil:
@@ -16,14 +16,17 @@ class MysqlUtil:
             cls.__obj = object.__new__(cls)
         return cls.__obj
 
-    def __init__(self):  # 本地
+    def __init__(self, env="local"):
         if MysqlUtil.__init_flag:
-            self.__host = config.HOST
-            self.__user = config.USERNAME
-            self.__password = config.PASSWORD
-            self.__port = config.PORT
-            self.__connect = pymysql.connect(host=self.__host, user=self.__user, password=self.__password,
-                                             port=self.__port)
+            if env == "local":
+                self.__connect = pymysql.connect(host="localhost", user="root", password="123456", port=3306)
+            elif env == "production":
+                self.__connect = pymysql.connect(host="10.0.0.59", user="app_vo_open", password="Tz23Zd112#1",
+                                                 port=8989)
+
+            else:
+                self.__connect = pymysql.connect(host="10.0.0.76", user="app", password="ZAQ!2wsx", port=3306)
+
             self.__cursor = self.__connect.cursor()
             MysqlUtil.__init_flag = False
 

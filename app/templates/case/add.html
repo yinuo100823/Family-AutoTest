@@ -1,18 +1,8 @@
-{% extends 'base_menu.html' %}
+{% extends 'base_ext.html' %}
 {% block title %}新建测试用例{% endblock %}
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/base-info.css') }}">
-{% endblock %}
-{% block selection %}
-    <div class="case-selection">
-        <ul class="case-selection-list">
-            <li>| 快速导航...</li>
-            <li>| <a href="#content-body">回到顶部</a></li>
-            <li>| <a href="#request-header">请求体(body)</a></li>
-            <li>| <a href="#request-pre-fields">前置数据</a></li>
-        </ul>
-    </div>
 {% endblock %}
 {% block main %}
     <div class="info-func-btn">
@@ -32,4 +22,15 @@
             </div>
         </form>
     </div>
+
+    {#============长页面埋点导航============#}
+    <div class="quick-point">
+        <ul>
+            <li>快速导航...</li>
+            <li><a href="#main">回到顶部</a></li>
+            <li><a href="#request-header">请求体(body)</a></li>
+            <li><a href="#request-pre-fields">前置数据</a></li>
+        </ul>
+    </div>
 {% endblock %}
+
