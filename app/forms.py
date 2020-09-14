@@ -6,7 +6,8 @@
 import json
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, IntegerField, TextAreaField, SelectField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, \
+    IntegerField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, EqualTo, Email, Length, Optional
 from app.models import Service, User, Interface, Case
 from wtforms import ValidationError
@@ -62,16 +63,16 @@ class LoginForm(RenderForm):
 
 
 class ServiceForm(RenderForm):
-    name = StringField("服务名称", validators=[DataRequired(), Length(max=50)])
+    name = StringField("应用名称", validators=[DataRequired(), Length(max=50)])
     protocol = SelectField("协议", choices=[("http", "http"), ("https", "https")])
-    host = StringField("服务地址", validators=[DataRequired(), Length(max=50)])
-    port = IntegerField("服务端口", validators=[Optional()])
-    desc = TextAreaField("服务描述")
+    host = StringField("应用地址", validators=[DataRequired(), Length(max=50)])
+    port = IntegerField("应用端口", validators=[Optional()])
+    desc = TextAreaField("应用描述")
     submit = SubmitField("保存", render_kw={"class": "btn-primary btn-block"})
 
 
 class InterfaceForm(RenderForm):
-    service = SelectField("所属服务", coerce=int)
+    service = SelectField("所属应用", coerce=int)
     name = StringField("接口名称", validators=[DataRequired(), Length(max=50)])
     uri = StringField("接口路径", validators=[DataRequired(), Length(max=50)])
     method = SelectField('*请求方式', choices=[('GET', 'GET'), ('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE')])
@@ -87,7 +88,7 @@ class InterfaceForm(RenderForm):
 
     def validate_service(self, field):
         if field.data == 0:
-            raise ValidationError("接口所属服务必选")
+            raise ValidationError("接口所属应用必选")
 
 
 class CaseAddForm(RenderForm):
@@ -162,7 +163,7 @@ class CaseForm(CaseAddForm):
 
 class CaseSearchForm(RenderForm):
     name = StringField("测试用例名称:")
-    service = SelectField("所属服务:", coerce=int, choices=[])
+    service = SelectField("所属应用:", coerce=int, choices=[])
     interface = SelectField("测试接口:", coerce=int, choices=[])
     submit = SubmitField("搜索", render_kw={"class": "btn-primary"})
 
@@ -175,7 +176,7 @@ class CaseSearchForm(RenderForm):
 class InterfaceSearchForm(RenderForm):
     name = StringField("接口名称:")
     uri = StringField("接口路径:")
-    service = SelectField("所属服务:", coerce=int, choices=[])
+    service = SelectField("所属应用:", coerce=int, choices=[])
     submit = SubmitField("搜索", render_kw={"class": "btn-primary"})
 
     def __init__(self, *args, **kwargs):

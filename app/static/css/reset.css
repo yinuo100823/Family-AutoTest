@@ -13,7 +13,7 @@ html {
 }
 body {
     /*background: url('../img/gb.jpg') no-repeat ;*/
-    background-color: #fdffe3;
+    /*background-color: #f9ead6;*/
     background-size: cover;
     z-index: -999;
     display: block;
@@ -21,7 +21,7 @@ body {
     color: #171717;
 }
 /*清除列表的默认风格*/
-ul,ol,dl{
+ul,ol,dl,li{
     list-style: none;
 }
 
@@ -35,7 +35,7 @@ fieldset,img,input,button,textarea{
 
 /*超链接标签*/
 a{
-    color: #8414f3;
+    color: #af00af;
     text-decoration: none;
 }
 a:hover{
@@ -89,4 +89,5 @@ h1,h2,h3,h4,h5,h6{
     margin: 0 auto;
     padding-top: 10rem;
 }
+
 

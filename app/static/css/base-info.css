@@ -1,0 +1,15 @@
+.info-func-btn{
+    width: 100%;
+    height: 3.8rem;
+    /*background-color: #ff1858;*/
+    line-height: 3.4rem;
+    margin-bottom: 2rem;
+}
+.info-func-btn form{
+    margin: 0;
+    padding: 0;
+}
+.info-body{
+    border-top: 1px solid #948b80;
+    padding-top: 2rem;
+}

@@ -1,0 +1,50 @@
+/*------------列表页搜索区域样式 start-------------*/
+.list-top{
+    width: 100%;
+    height: 13rem;
+    /*background-color: #86ff3c;*/
+    margin-bottom: 3rem;
+}
+.list-top .list-top-search{
+    width: 100%;
+    height: 70%;
+    /*background-color: #ff312c;*/
+}
+.list-top .list-top-search form{
+    padding: 0;
+}
+
+.list-top .list-top-search form>div{
+    margin-bottom: 0.5rem;
+    margin-right: 2rem;
+}
+/*操作按钮，如创建按钮等*/
+.list-top .list-top-func-btn{
+    width: 100%;
+    height: 30%;
+    text-align: left;
+}
+input,select{
+    width: 25rem !important;
+    padding-left: 1rem !important;
+    line-height: 20rem;
+}
+input#submit{
+    width: 6rem !important;
+    height: 3.5rem;
+    padding: 0 !important;
+    line-height: 3.5rem;
+    margin-left: 2rem;
+}
+/*------------列表页搜索区域样式 end-------------*/
+
+/*------------列表页table区域样式 start-------------*/
+.list-body{
+    width: 100%;
+    height: 100%;
+    border-top: 1px solid #948b80;
+    padding-top: 2rem;
+}
+
+
+/*------------列表页table区域样式 end-------------*/
