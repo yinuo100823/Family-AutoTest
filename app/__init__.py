@@ -29,8 +29,8 @@ def create_app():
 
     # 注册蓝本
     # app.register_blueprint(home_blueprint)
-    app.register_blueprint(user_blueprint, url_prefix="/auto/text/")
-    app.register_blueprint(case_blueprint, url_prefix="/auto/text/")
-    app.register_blueprint(interface_blueprint, url_prefix="/auto/text/")
-    app.register_blueprint(services_blueprint, url_prefix="/auto/text/")
+    app.register_blueprint(user_blueprint, url_prefix="/auto/test/")
+    app.register_blueprint(case_blueprint, url_prefix="/auto/test/")
+    app.register_blueprint(interface_blueprint, url_prefix="/auto/test/")
+    app.register_blueprint(services_blueprint, url_prefix="/auto/test/")
     return app
