@@ -12,9 +12,13 @@ html {
     font-size: 10px;
 }
 body {
-    background-color: rgba(255, 255, 255, 0.05);
+    /*background: url('../img/gb.jpg') no-repeat ;*/
+    background-color: #fdffe3;
+    background-size: cover;
+    z-index: -999;
     display: block;
     font: 1.6rem/1.5 Microsoft YaHei,Heiti SC,tahoma,arial,Hiragino Sans GB,"\5B8B\4F53",sans-serif;
+    color: #171717;
 }
 /*清除列表的默认风格*/
 ul,ol,dl{
@@ -31,7 +35,7 @@ fieldset,img,input,button,textarea{
 
 /*超链接标签*/
 a{
-    color: #999999;
+    color: #8414f3;
     text-decoration: none;
 }
 a:hover{
@@ -78,5 +82,11 @@ h1,h2,h3,h4,h5,h6{
 }
 .tc{
     text-align: center;
+}
+
+.s-box{
+    width: 40%;
+    margin: 0 auto;
+    padding-top: 10rem;
 }
 

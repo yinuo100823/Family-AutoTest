@@ -106,21 +106,7 @@
 
 </div>
 
-<div class="flash-message">
-    {% for category,message in get_flashed_messages(with_categories=true) %}
-        {% if category=="success" %}
-            <div class="alert alert-success alert-dismissable">
-        {% elif category=="warning" %}
-            <div class="alert alert-warning">
-        {% elif category=="danger" %}
-            <div class="alert alert-danger">
-        {% else %}
-            <div class="alert alert-info">
-        {% endif %}
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times</button>{{ message }}
-    </div>
-    {% endfor %}
-    </div>
+
 
     <div class="footer">
         <div class="footer-right">

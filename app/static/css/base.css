@@ -2,10 +2,12 @@
 #header{
     width: 100%;
     height: 5rem;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #b042ff;
     position: fixed;
     top:0;
     left:0;
+    z-index: 999;
+    background-color: #dbddc1;
 }
 #header .header-center{
     height: 100%;
@@ -27,25 +29,11 @@
     height: 5rem;
     margin: 0 1.5rem;
 }
-
-/*中间导航*/
-#header .header-center .header-center-c{
-    height: 100%;
-    /*background-color: #f34535;*/
-    flex: 4;
-    line-height: 5rem;
-
+#header .header-center .header-center-l a.header-center-l-logo img{
+    border-radius: 10%;
+    margin-right: 5rem;
 }
-#header .header-center .header-center-c ul li{
-    display: inline-block;
-    width: 4.5rem;
-    height: 5rem;
-    border-radius: 50%;
-    margin-left: 3rem;
-    background-color: rgba(0,0,0,.1);
-    vertical-align: center;
-    box-sizing: border-box;
-}
+
 /*右侧*/
 #header .header-center .header-center-r{
     height: 100%;
@@ -61,5 +49,87 @@
 /*----------------头部--->结束-------------------*/
 
 /*----------------主要内容--->开始-------------------*/
+/*双飞翼布局start*/
+#main{
+    width: 100%;
+    padding-top: 9rem;
+    padding-bottom: 9rem;
+}
+#main .main-center{
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+#main .main-center .main-center-c{
+    margin: 0 20rem;
+    height: 100%;
+    padding:0 5rem;
+    min-width: 80rem;
+    /*background-color: #8414f3;*/
+}
+#main .main-left{
+    width: 20rem;
+    height: 100%;
+    float: left;
+    margin-left: -100%;
+    /*background-color: #2eff15;*/
+}
+#main .main-right{
+    width: 20rem;
+    float: left;
+    height: 100%;
+    margin-left: -20rem;
+    /*background-color: #ff0121;*/
+}
+/*双飞翼布局end*/
 
+/*左侧导航栏*/
+#main .main-left .main-left-menu{
+    height: 79rem;
+    /*background-color: #f34535;*/
+    line-height: 5rem;
+    /*margin-left: 4rem;*/
+    border-right: 1px solid #8414f3;
+
+}
+#main .main-left ul.main-left-menu li{
+    padding: 0 5rem;
+}
 /*----------------主要内容--->结束-------------------*/
+
+/*----------------底部--->开始-------------------*/
+#footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #dbddc1;
+    height: 4rem;
+    width: 100%;
+    z-index: 999;
+    line-height: 4rem;
+    padding: 0 3rem;
+    text-align: right;
+}
+#footer .footer-right{
+    height: 5rem;
+    width: 30%;
+    float: right;
+}
+#footer .footer-right p{
+    display: inline;
+    margin-right: 2rem
+}
+
+#footer .footer-right p strong{
+    color: #8414f3;
+}
+/*----------------底部--->结束-------------------*/
+
+/*页面闪现消息提示样式*/
+.flash-message {
+    position: fixed;
+    bottom: 4rem;
+    left: 3.5rem;
+    width: 20rem;
+    padding: 0.2rem;
+}
