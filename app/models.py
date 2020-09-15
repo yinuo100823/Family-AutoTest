@@ -37,7 +37,7 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, raw_password)
 
 
-# 服务模型
+# 应用模型
 class Service(db.Model):
     __tablename__ = 'bt_service'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, index=True)
@@ -75,7 +75,7 @@ class Interface(db.Model):
     creater_id = db.Column(db.Integer, db.ForeignKey("bt_user.id"), nullable=False)
     creater = db.relationship("User", backref=db.backref("interfaces"))
     service_id = db.Column(db.Integer, db.ForeignKey("bt_service.id"), nullable=False)
-    service = db.relationship("Service", backref=db.backref("interfaces"))  # 接口所属服务
+    service = db.relationship("Service", backref=db.backref("interfaces"))  # 接口所属应用
     create_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
     update_time = db.Column(db.DateTime(), nullable=False, default=datetime.now())
 
@@ -94,7 +94,7 @@ class Case(db.Model):
     __tablename__ = 'bt_case'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, index=True)
     service_id = db.Column(db.Integer, db.ForeignKey("bt_service.id"), nullable=False, index=True)
-    service = db.relationship("Service", backref=db.backref("cases"))  # case所属服务
+    service = db.relationship("Service", backref=db.backref("cases"))  # case所属应用
     interface_id = db.Column(db.Integer, db.ForeignKey("bt_interface.id"), nullable=False, comment="关联的接口")
     interface = db.relationship("Interface", backref=db.backref("cases"))
     name = db.Column(db.String(50), nullable=False, comment="测试用例名称")

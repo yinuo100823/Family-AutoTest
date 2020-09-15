@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}登陆{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/user.css') }}">
+    <script src="{{ url_for('static',filename='js/user.js') }}"></script>
+{% endblock %}
+{% block main %}
+    <section id="content">
+        {#===============头部======================#}
+        <div class="content-header clearfix">
+            <a class='current' href="javascript:">我要登陆</a>
+            <a href="javascript:">我要注册</a>
+        </div>
+
+        {#===============内容======================#}
+        <div class="content-body">
+            <div class="dom current">
+                <form action="{{ url_for('user.login') }}" method="post">
+                    <div class="form-group  required">
+                        <label class="control-label" for="telephone"><em>*</em>手机号码</label>
+                        <input class="form-control" id="telephone" name="telephone" required="" type="text" value="">
+                    </div>
+                    <div class="form-group  required">
+                        <label class="control-label" for="password"><em>*</em>密码</label>
+                        <input class="form-control" id="password" name="password" required="" type="password" value="">
+
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input id="remember" name="remember" type="checkbox" value="y"> 记住我
+                        </label>
+                    </div>
+                    <input class="btn btn-default btn-primary btn-block" id="submit" name="submit" type="submit"
+                           value="立即登陆">
+                </form>
+            </div>
+
+            <div class="dom">
+                <form action="{{ url_for('user.sign') }}" method="post">
+                    <div class="form-container">
+                        <div class="form-group  required">
+                            <label class="control-label" for="telephone"><em>*</em>手机号码</label>
+                            <input class="form-control" id="telephone" name="telephone" placeholder="手机号码" required=""
+                                   type="text" value="">
+                        </div>
+                        <div class="form-group  required">
+                            <label class="control-label" for="mini_name"><em>*</em>昵称</label>
+                            <input class="form-control" id="mini_name" name="mini_name" required="" type="text"
+                                   value="">
+                        </div>
+                        <div class="form-group  required">
+                            <label class="control-label" for="email"><em>*</em>电子邮箱</label>
+                            <input class="form-control" id="email" name="email" required="" type="text" value="">
+                        </div>
+                        <div class="form-group  required">
+                            <label class="control-label" for="password"><em>*</em>密码</label>
+                            <input class="form-control" id="password" name="password" required="" type="password"
+                                   value="">
+                        </div>
+                        <div class="form-group  required">
+                            <label class="control-label" for="re_password"><em>*</em>重复密码</label>
+                            <input class="form-control" id="re_password" name="re_password" required="" type="password"
+                                   value="">
+                        </div>
+                        <input class="btn btn-default btn-primary btn-block" id="submit" name="submit" type="submit"
+                               value="立即注册">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
+    </section>
+
+{% endblock %}

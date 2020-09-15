@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import "";
 body, button, dd, dl, dt, fieldset, form,
 h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p,
 pre, td, textarea, th, ul {
@@ -38,11 +39,14 @@ a{
     color: #af00af;
     text-decoration: none;
 }
-a:hover{
+a:hover
+{
     color: #f34535;
     text-decoration: none;
 }
-
+a:link{
+   text-decoration: none;
+}
 /*h家族*/
 h1,h2,h3,h4,h5,h6{
     font-weight: normal;
@@ -90,4 +94,9 @@ h1,h2,h3,h4,h5,h6{
     padding-top: 10rem;
 }
 
+/*必填字段*/
+em{
+    color: #f34535;
+    margin-right: 0.5rem;
+}
 

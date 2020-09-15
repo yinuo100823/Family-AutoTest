@@ -43,7 +43,7 @@ def interface_list():
 @login_required
 def interface_info(id):
     form = InterfaceForm()
-    interface = Interface.query.filter(and_(Interface.id == id, Interface.creater_id == g.user.id)).first()
+    interface = Interface.query.filter(and_(Interface.id == id, Interface.creater_id == current_user.id)).first()
     if interface:
         if request.method == "POST" and form.validate_on_submit():
             interface.name = form.name.data

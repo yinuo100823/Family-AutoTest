@@ -15,12 +15,13 @@ from exts import db
 
 @user.route("/user/sign/", methods=["GET", "POST"])
 def sign():
-    form = SignForm()
-    if request.method == "POST" and form.validate_on_submit():
-        telephone = form.telephone.data
-        mini_name = form.mini_name.data
-        password = form.password.data
-        email = form.email.data
+    # form = SignForm()
+    # if request.method == "POST" and form.validate_on_submit():
+    if request.method == "POST":
+        telephone = request.form.get("telephone")
+        mini_name = request.form.get("mini_name")
+        password = request.form.get("password")
+        email = request.form.get("email")
         new_user = User(telephone=telephone, mini_name=mini_name, password=password, email=email)
         try:
             db.session.add(new_user)
@@ -28,16 +29,16 @@ def sign():
         except:
             flash("注册用户失败",FlashEnum.warning.name)
         return redirect(url_for('.login'))
-    return render_template("user/sign.html", form=form)
+    return render_template("user/user.html")
 
 
 @user.route("/user/login/", methods=["GET", "POST"])
 def login():
-    form = LoginForm()
-    if request.method == "POST" and form.validate_on_submit():
-        telephone = form.telephone.data
-        password = form.password.data
-        remember = form.remember.data
+    # form = LoginForm()
+    if request.method == "POST":
+        telephone = request.form.get("telephone")
+        password = request.form.get("password")
+        remember = request.form.get("remember")
         user_info = User.query.filter(User.telephone == telephone).first()
 
         if user_info and user_info.check_password(password):
@@ -47,7 +48,7 @@ def login():
                 next = url_for("index")
                 return redirect(next)
         flash("用户不存在或密码错误！", FlashEnum.warning.name)
-    return render_template("user/login.html", form=form)
+    return render_template("user/user.html")
 
 
 @user.route("/logout/")
